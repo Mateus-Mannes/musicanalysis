@@ -2,10 +2,19 @@
 {% extends "layout.html" %}
 {% block title %}Music Analysis{% endblock %}
 {% block main %}
-    <style>
-        .logo{padding: 7%; background-color: #e4e4e4; margin-top: 10%; margin-left: 5%;}
-    </style>
-    <img class="logo" src="/static/site-logo.png">
-    <a href="/login">login with spotify</a>
-    <P>{{ X }}</P>
+    
+    <form action="/playlists" method="post">
+        <div class="form-group">
+            <input autocomplete="off" autofocus class="form-control" name="username" placeholder="Username" type="text">
+        </div>
+        <button class="btn btn-primary" type="submit">comparar</button>
+    </form>
+   
+    {% if method != 'get' %}
+    
+        <p>{{ name1 }}, {{ name2 }}</p>
+        <p>{{ cop }}</p>
+  
+    {% endif %}
+    
 {% endblock %}

@@ -2,18 +2,20 @@ import spotipy
 from spotipy.oauth2 import SpotifyOAuth
 from collections import Counter
 
+def userdata(user):
+    scope = "user-library-read"
 
-sp = spotipy.Spotify(auth_manager=SpotifyOAuth(
-                                               "79d8631081f749d5b6988001e30616dd", 
-                                               "eb8d5e7c824c4139b989031eeccef142", 
-                                               "http://localhost:8888/callback",
-                                               scope = "playlist-read-collaborative",
-                                               username="marianamannes"))
+    sp = spotipy.Spotify(auth_manager=SpotifyOAuth(scope=scope))
+
+    return sp.current_user_saved_tracks()
+
 
 class Playlists():
-    def __init__(self, user):
-        self.playlists = sp.user_playlists(user, limit=5)
-        self.myplaylists = sp.user_playlists(sp.me()["id"], limit=5)
+    
+    def __init__(self, user, usuario):
+        self.sp =  spotipy.Spotify(auth_manager=usuario)
+        self.playlists = self.sp.user_playlists(user, limit=5)
+        self.myplaylists = self.sp.user_playlists(self.sp.me()["id"], limit=5)
         self.nome = self.playlists["items"][0]["owner"]["display_name"]
         self.ids = []
         for i in range(len(self.playlists["items"])):
@@ -23,20 +25,23 @@ class Playlists():
             self.myids.append(self.myplaylists["items"][i]["id"])
         self.music_playlists = []
         for i in range(len(self.ids)):
-            self.music_playlists.append(sp.user_playlist(user, self.ids[i]))
+            self.music_playlists.append(self.sp.user_playlist(user, self.ids[i]))
         self.my_musics = []
         for i in range(len(self.myids)):
-            self.my_musics.append(sp.user_playlist(sp.me()["id"], self.myids[i]))
+            self.my_musics.append(self.sp.user_playlist(self.sp.me()["id"], self.myids[i]))
             
     def pegar_playlists(self):
+        
         if self.playlists["items"] != []:
             print("As playlists mais recentes de " + f"{self.nome}" + " são:\n")
-            for i in range(len(self.playlists["items"])):
-                print('"' + self.playlists["items"][i]["name"] + '"' + "\n")
-                if "mosaic" not in self.playlists["items"][0]["images"][0]["url"]:
-                    print(self.playlists["items"][0]["images"][0]["url"] + "\n")
+            #for i in range(len(self.playlists["items"])):
+                #print('"' + self.playlists["items"][i]["name"] + '"' + "\n")
+                #if "mosaic" not in self.playlists["items"][0]["images"][0]["url"]:
+                    #print(self.playlists["items"][0]["images"][0]["url"] + "\n")
+            return self.playlists["items"]
         else:
-            print("Ooops! Parece que " + f"{self.nome}" + " não tem nenhuma playlist pública.")
+            #print("Ooops! Parece que " + f"{self.nome}" + " não tem nenhuma playlist pública.")
+            return "Ooops! Parece que " + f"{self.nome}" + " não tem nenhuma playlist pública."
             
     def pegar_generos(self):
         artists = []
@@ -51,21 +56,21 @@ class Playlists():
                     artists.append(playlist["tracks"]["items"][i]["track"]["artists"][0]["id"])
             for i in range(len(artists)):
                 try:
-                    if type(sp.artist(artists[i])["genres"][0]) == str:
+                    if type(self.sp.artist(artists[i])["genres"][0]) == str:
                         allgenres = []
-                        allgenres.append(sp.artist(artists[i])["genres"][0])
+                        allgenres.append(self.sp.artist(artists[i])["genres"][0])
                 except:
-                    if type(sp.artist(artists[i])["genres"]) == str:
+                    if type(self.sp.artist(artists[i])["genres"]) == str:
                         allgenres = []
-                        allgenres.append(sp.artist(artists[i])["genres"])
+                        allgenres.append(self.sp.artist(artists[i])["genres"])
             moda = Counter(allgenres)
             if moda.most_common(1)[0][0] not in pgenres:
                 pgenres.append(moda.most_common(1)[0][0])
             elif moda.most_common(2)[0][0] not in pgenres:
                 pgenres.append(moda.most_common(2)[0][0])
-        print("Os principais gêneros musicais das playlists de " + f"{self.nome}" + " são: \n")
-        for g in pgenres:
-            print(g + "\n")
+        #print("Os principais gêneros musicais das playlists de " + f"{self.nome}" + " são: \n")
+        #for g in pgenres:
+            #print(g + "\n")
         return pgenres
     def pegar_artista(self):
         artists = []
@@ -75,15 +80,18 @@ class Playlists():
                 artists.append(playlist["tracks"]["items"][i]["track"]["artists"][0]["name"])
         moda = Counter(artists)
         fav = moda.most_common(1)[0][0]
-        print(f"O artista mais frequente de {self.nome} é {fav}! \n")
-        artist = sp.search(q='artist:' + f"{fav}", type='artist')
+        #print(f"O artista mais frequente de {self.nome} é {fav}! \n")
+        artist = self.sp.search(q='artist:' + f"{fav}", type='artist')
         genre = str(artist["artists"]["items"][0]["genres"][0])
         genre = genre.replace("'", "")
         genre = genre.replace("[", "")
         genre = genre.replace("]", "")
-        print(f"Gênero: {genre}\n")
+        #print(f"Gênero: {genre}\n")
         foto = artist["artists"]["items"][0]["images"][0]["url"]
-        print(foto)
+        #print(foto)
+        artistData = (fav, genre, foto)
+        return artistData
+        
         
     def pegar_comuns(self):
         musics = []
@@ -102,16 +110,17 @@ class Playlists():
             if m in mymusics:
                 comuns.append(m)
         if comuns != []:
-            print(f"Algumas músicas que você tem em comum com {self.nome} são: \n")
-            try:
-                for c in comuns[0:5]:
-                    print(c[0] + " - " + c[1])
-            except:
-                for c in comuns:
-                    print(c[0] + " - " + c[1])
+            return comuns
+            #print(f"Algumas músicas que você tem em comum com {self.nome} são: \n")
+            #try:
+                #for c in comuns[0:5]:
+                    #print(c[0] + " - " + c[1])
+            #except:
+                #for c in comuns:
+                    #print(c[0] + " - " + c[1])
         else:
-            print(f"Ah! Parece que você não tem músicas recentes em comum com {self.nome}.")
-        return sp.me()
+            return "Ah! Parece que você não tem músicas recentes em comum com {self.nome}."
+        
         
                 
 #analyze =  Playlists("12170240389")
