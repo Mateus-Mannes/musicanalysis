@@ -1,20 +1,48 @@
   
 {% extends "layout.html" %}
-{% block title %}Music Analysis{% endblock %}
 {% block main %}
-    
-    <form action="/playlists" method="post">
-        <div class="form-group">
-            <input autocomplete="off" autofocus class="form-control" name="username" placeholder="Username" type="text">
-        </div>
-        <button class="btn btn-primary" type="submit">comparar</button>
-    </form>
-   
-    {% if method != 'get' %}
-    
-        <p>{{ name1 }}, {{ name2 }}</p>
-        <p>{{ cop }}</p>
-  
-    {% endif %}
-    
+
+<style>
+    body {
+        color: whitesmoke;
+        font-family:"Trebuchet MS";
+    }
+</style>
+
+<form action="/playlists" method="post">
+    <div class="form-row align-items-center">
+      <div class="col-auto" id="caixa">
+        <input autocomplete="off" class="form-control mb-2" name="username" placeholder="Username" type="text">
+      </div>
+      <button class="btn btn-light" type="submit" id="botão">Ok</button>
+</form>
+
+<style type="text/css">
+
+.btn btn-light {
+    position: relative;
+  }
+  #botão {
+    position: absolute;
+    top: 142px;
+    left: 885px;
+  }
+
+.col-auto{
+  }
+  #caixa {
+    top: 20px;
+    left: 660px;
+}
+
+</style>
+
+
+{% if method != 'get' %}
+
+    <p>{{ name1 }}, {{ name2 }}</p>
+    <p>{{ cop }}</p>
+
+{% endif %}
+
 {% endblock %}

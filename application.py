@@ -1,4 +1,5 @@
 import os
+from flask import Flask, session, request, redirect, render_template
 from flask_session import Session
 import spotipy
 import uuid
@@ -14,16 +15,18 @@ caches_folder = './.spotify_caches/'
 if not os.path.exists(caches_folder):
     os.makedirs(caches_folder)
 
+
 def session_cache_path():
     return caches_folder + session.get('uuid')
 
-@app.route('/')
+
+@app.route('/', methods=["GET", "POST"])
 def index():
     if not session.get('uuid'):
         # Step 1. Visitor is unknown, give random ID
         session['uuid'] = str(uuid.uuid4())
     auth_manager = spotipy.oauth2.SpotifyOAuth(scope='user-read-currently-playing playlist-modify-private',
-                                                cache_path=session_cache_path(), 
+                                                cache_path=session_cache_path(),
                                                 show_dialog=True)
     if request.args.get("code"):
         # Step 3. Being redirected from Spotify auth page
@@ -33,13 +36,10 @@ def index():
         # Step 2. Display sign in link when no token
         auth_url = auth_manager.get_authorize_url()
         return f'<h2><a href="{auth_url}">Sign in</a></h2>'
-    
     spotify = spotipy.Spotify(auth_manager=auth_manager)
+    return render_template('main.html', name=spotify.me()["display_name"])
 
-    return f'<h2>Hi {spotify.me()["display_name"]}, ' \
-           f'<small><a href="/sign_out">[sign out]<a/></small></h2>' \
-           f'<a href="/playlists">my playlists</a> | ' \
-           
+
 @app.route('/sign_out')
 def sign_out():
     os.remove(session_cache_path())
@@ -48,8 +48,9 @@ def sign_out():
         # Remove the CACHE file (.cache-test) so that a new user can authorize.
         os.remove(session_cache_path())
     except OSError as e:
-        print ("Error: %s - %s." % (e.filename, e.strerror))
+        print("Error: %s - %s." % (e.filename, e.strerror))
     return redirect('/')
+
 
 @app.route('/playlists', methods=["GET", "POST"])
 def playlists():
@@ -61,16 +62,3 @@ def playlists():
     if not auth_manager.get_cached_token():
         return redirect('/')
     return render_template('index.html', method='get')
-
-
-
-
-
-
-
-
-
-
-
-
-
