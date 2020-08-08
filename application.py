@@ -1,5 +1,4 @@
 import os
-from flask import Flask, session, request, redirect, render_template
 from flask_session import Session
 import spotipy
 import uuid
