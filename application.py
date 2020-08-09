@@ -4,6 +4,7 @@ from flask_session import Session
 import spotipy
 import uuid
 from main import Playlists
+from login import login_required
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.urandom(64)
@@ -15,50 +16,51 @@ caches_folder = './.spotify_caches/'
 if not os.path.exists(caches_folder):
     os.makedirs(caches_folder)
 
-
 def session_cache_path():
-    return caches_folder + session.get('uuid')
+    return caches_folder + str(session.get('uuid'))
 
-
-@app.route('/', methods=["GET", "POST"])
+@app.route('/', methods=['GET'])
 def index():
-    if not session.get('uuid'):
-        # Step 1. Visitor is unknown, give random ID
-        session['uuid'] = str(uuid.uuid4())
-    auth_manager = spotipy.oauth2.SpotifyOAuth(scope='user-read-currently-playing playlist-modify-private',
-                                                cache_path=session_cache_path(),
-                                                show_dialog=True)
-    if request.args.get("code"):
-        # Step 3. Being redirected from Spotify auth page
-        auth_manager.get_access_token(request.args.get("code"))
-        return redirect('/')
-    if not auth_manager.get_cached_token():
-        # Step 2. Display sign in link when no token
-        auth_url = auth_manager.get_authorize_url()
-        return f'<h2><a href="{auth_url}">Sign in</a></h2>'
-    spotify = spotipy.Spotify(auth_manager=auth_manager)
-    return render_template('main.html', name=spotify.me()["display_name"])
+    return render_template('index.html')
 
-
-@app.route('/sign_out')
-def sign_out():
+@app.route('/logout', methods=['GET'])
+def logout():
     os.remove(session_cache_path())
     session.clear()
     try:
-        # Remove the CACHE file (.cache-test) so that a new user can authorize.
         os.remove(session_cache_path())
     except OSError as e:
-        print("Error: %s - %s." % (e.filename, e.strerror))
+        print ("Error: %s - %s." % (e.filename, e.strerror))
     return redirect('/')
 
-
-@app.route('/playlists', methods=["GET", "POST"])
-def playlists():
-    auth_manager = spotipy.oauth2.SpotifyOAuth(cache_path=session_cache_path())
-    if request.method == 'POST':
-        spotify = spotipy.Spotify(auth_manager=auth_manager)
-        comparação = Playlists(request.form.get('username'), auth_manager)
-        return render_template('index.html', name1=spotify.me()["display_name"], name2=comparação.nome, cop=comparação.pegar_comuns())
+@app.route('/login', methods=['GET'])
+def login():
+    if not session.get('uuid'):
+        session['uuid'] = uuid.uuid4()
+    auth_manager = spotipy.oauth2.SpotifyOAuth(scope='user-read-currently-playing playlist-modify-private',
+                                                cache_path=session_cache_path(), 
+                                                show_dialog=True)
+    if request.args.get("code"):
+        auth_manager.get_access_token(request.args.get("code"))
+        return redirect('/profile')
     if not auth_manager.get_cached_token():
-        return redirect('/')
-    return render_template('index.html', method='get')
+        # Step 2. Display sign in link when no token
+        auth_url = auth_manager.get_authorize_url()
+        return redirect(auth_url)
+
+      
+@app.route('/profile', methods=['GET'])
+@login_required
+def profile():
+    return render_template('profile.html')
+
+@app.route('/create', methods=['GET'])
+@login_required
+def create_playlist():
+    return render_template('create.html')
+
+@app.route('/look users')
+@login_required
+def look_users():
+    return render_template('look.html')
+
