@@ -1,0 +1,114 @@
+{% extends "layout.html" %}
+{% block main %}
+
+<body style="background-color:#2C2E33;">
+
+<form action="/look%20users" method="post">
+    <div class="form-row align-items-center">
+      <div class="col-auto" id="caixa">
+        <input autocomplete="off" class="form-control mb-2" name="username" placeholder="Username" type="text">
+      </div>
+      <button class="btn btn-success" type="submit" id="botão">Search</button>
+</form>
+
+<style type="text/css">
+
+.btn btn-light {
+    position: fixed;
+  }
+  #botão {
+    position: fixed;
+    top: 75px;
+    left: 885px;
+  }
+
+.col-auto{
+    position: fixed;
+  }
+  #caixa {
+    position: fixed;
+    top: 75px;
+    left: 660px;
+}
+
+body {
+        color: whitesmoke;
+        font-family:"Trebuchet MS";
+    }
+
+</style>
+
+{% if method != 'get' %}
+
+    {% if img != 'no' %}
+
+    <div style="width:100px; height:100px;overflow:hidden;position:fixed; left:20; top:170px;border-radius: 50%">
+        <img src={{ img }} style="max-width:150px;max-height:150px">
+    </div>
+
+    {% endif %}
+
+    {% if cop != 'no' %}
+
+        <div style = "position:fixed; left:130px; top:150px;">
+            <ul>
+                <p> The most recent playlists by {{name}} are:  </p>
+                {% for x in cop %}
+                    <li>{{ x }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+    {% else %}
+
+    <div style = "position:relative; left:130px; top:150px;">
+        <p> Ooops! It looks like {{ name }} doesn't have any public playlist. </p>
+    </div>
+
+    {% endif %}
+
+    <div style = "position:fixed; left:700px; top:150px;">
+        <ul>
+            <p> The main genres of {{name}}'s playlists are:  </p>
+            {% for y in genres %}
+                <li>{{ y }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    
+    <div style="width:100px; height:100px;overflow:hidden;position:fixed; left:20; top:400px;border-radius: 50%">
+        <img src={{ foto }} style="max-width:150px;max-height:150px">
+    </div>
+
+    <div style = "position:fixed; left:130px; top:400px;">
+        <ul>
+            <p>The most frequent artist of {{name}} is {{fav}}  </p>
+            <p>Genre: {{genre}}</p>
+        </ul>
+    </div>
+
+    {% if comuns != '[]' %}
+
+    <div style = "position:fixed; left:700px; top:400px;">
+        <ul>
+            <p>Some songs that you have in common with {{name}} are:  </p>
+            {% for a in comuns %}
+            <li>{{ a }}</li>
+        {% endfor %}
+        </ul>
+    </div>
+
+    {% else %}
+
+    <div style = "position:fixed; left:700px; top:400px;">
+            <p>You don't have any songs in common with {{name}}.</p>
+    </div>
+
+    {% endif %}
+
+{% endif %}
+
+{% endblock %}
+
+</body>

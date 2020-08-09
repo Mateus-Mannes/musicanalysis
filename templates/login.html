@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+{% block main %}
+<style>
+.center {
+    margin: auto
+}
+</style>
+<div style="margin-top:20%;">
+    <h3 class="text-center">Hi! To use this feature you need to login with your spotify account.</h3>
+    <form style="margin:auto;" class="form-inline my-2 my-lg-0" action="/login" method="get"> 
+        <button class="btn btn-success center">Login with Spotify</button>
+    </form>
+</div>
+{% endblock %}
