@@ -48,33 +48,25 @@ class Playlists():
             return "no", self.img
 
     def pegar_generos(self):
-        artists = []
         pgenres = []
         for i in range(len(self.music_playlists)):
+            artists_counter = 0
+            artists = []
             playlist = self.music_playlists[i]
-            try:
-                for i in range(10):
+            for i in range(len(playlist["tracks"]["items"])):
+                if artists_counter == 10:
+                    break
+                if playlist["tracks"]["items"][i]["track"]["artists"][0]["id"] not in artists:
                     artists.append(playlist["tracks"]["items"][i]["track"]["artists"][0]["id"])
-            except:
-                for i in range(len(playlist["tracks"]["items"])):
-                    artists.append(playlist["tracks"]["items"][i]["track"]["artists"][0]["id"])
-            for i in range(len(artists)):
-                try:
-                    if type(self.sp.artist(artists[i])["genres"][0]) == str:
-                        allgenres = []
-                        allgenres.append(self.sp.artist(artists[i])["genres"][0])
-                except:
-                    if type(self.sp.artist(artists[i])["genres"]) == str:
-                        allgenres = []
-                        allgenres.append(self.sp.artist(artists[i])["genres"])
-            moda = Counter(allgenres)
+                    artists_counter += 1
+            artistFullData = self.sp.artists(artists)
+            generos = []
+            for i in range(len(artistFullData["artists"])):
+                for genero in artistFullData["artists"][i]['genres']:
+                    generos.append(genero)
+            moda = Counter(generos)
             if moda.most_common(1)[0][0] not in pgenres:
                 pgenres.append(moda.most_common(1)[0][0])
-            elif moda.most_common(2)[0][0] not in pgenres:
-                pgenres.append(moda.most_common(2)[0][0])
-        # print("Os principais gêneros musicais das playlists de " + f"{self.nome}" + " são: \n")
-        # for g in pgenres:
-        # print(g + "\n")
         return pgenres
 
     def pegar_artista(self):
