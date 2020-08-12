@@ -78,7 +78,7 @@ body {
 
     
     <div style="width:100px; height:100px;overflow:hidden;position:fixed; left:20; top:400px;border-radius: 50%">
-        <img src={{ foto }} style="max-width:150px;max-height:150px">
+        <img src={{ photo }} style="max-width:150px;max-height:150px">
     </div>
 
     <div style = "position:fixed; left:130px; top:400px;">
@@ -93,8 +93,8 @@ body {
     <div style = "position:fixed; left:700px; top:400px;">
         <ul>
             <p>Some songs that you have in common with {{name}} are:  </p>
-            {% for a in comuns %}
-            <li>{{ a }}</li>
+            {% for ic in incommon %}
+            <li>{{ ic }}</li>
         {% endfor %}
         </ul>
     </div>

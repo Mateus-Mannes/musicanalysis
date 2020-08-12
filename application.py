@@ -3,7 +3,7 @@ from flask import Flask, session, request, redirect, render_template
 from flask_session import Session
 import spotipy
 import uuid
-from main import Playlists
+from main import Look_For_User
 from login import login_required
 
 app = Flask(__name__)
@@ -70,10 +70,8 @@ def create_playlist():
 def look_users():
     auth_manager = spotipy.oauth2.SpotifyOAuth(cache_path=session_cache_path())
     if request.method == 'POST':
-        spotify = spotipy.Spotify(auth_manager=auth_manager)
-        comparação = Playlists(request.form.get('username'), auth_manager)
-        return render_template('look.html', name=comparação.nome, cop=comparação.pegar_playlists()[0], img=comparação.pegar_playlists()[1], genres=comparação.pegar_generos(), fav = comparação.pegar_artista()[0], genre = comparação.pegar_artista()[1], foto = comparação.pegar_artista()[2], comuns = comparação.pegar_comuns())
+        query = Look_For_User(request.form.get('username'), auth_manager)
+        return render_template('look.html', name=query.name, cop=query.get_playlists(), img=query.img, genres=query.get_genres(), fav = query.get_artist()[0], genre = query.get_artist()[1], photo = query.get_artist()[2], incommon = query.get_incommon())
     if not auth_manager.get_cached_token():
         return redirect('/')
     return render_template('look.html', method='get')
-
