@@ -1,5 +1,7 @@
 from collections import Counter
 
+#def check_user(username):
+
 
 def get_name(playlists):
     try:
@@ -31,7 +33,7 @@ def get_playlistsnames(playlists):
     if playlists["items"] != []:
         playlistsnames = []
         for i in range(len(playlists["items"])):
-            playlistsnames.append(playlists["items"][i]["name"])
+            playlistsnames.append((playlists["items"][i]["name"],(playlists["items"][i]["id"])))
     else:
         playlistsnames = "no"
     return playlistsnames
@@ -70,19 +72,19 @@ def get_allartists(playlistdata):
         playlist = playlistdata[i]
         for i in range(len(playlist["tracks"]["items"])):
             try:
-                artists.append(playlist["tracks"]["items"][i]["track"]["artists"][0]["name"])
+                artists.append(playlist["tracks"]["items"][i]["track"]["artists"][0]["id"])
             except:
                 break
     return artists
 
 
-def get_musicnames(playlistdata):
+def get_musics(playlistdata):
     musics = []
     for i in range(len(playlistdata)):
         playlist = playlistdata[i]
         for i in range(len(playlist["tracks"]["items"])):
             try:
-                musics.append([playlist["tracks"]["items"][i]["track"]["name"], playlist["tracks"]["items"][i]["track"]["artists"][0]["name"]])
+                musics.append(playlist["tracks"]["items"][i]["track"]["id"])
             except:
                 break
     return musics
@@ -101,7 +103,8 @@ def get_incommonmusics(usermusics, mymusics):
 
 def get_artistgenre(artistdata):
     try:
-        genre = artistdata["artists"]["items"][0]["genres"][0]
+        genre = artistdata["genres"][0]
     except IndexError:
-        genre = artistdata["artists"]["items"][0]["genres"]
+        genre = artistdata["genres"]
     return genre
+

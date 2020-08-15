@@ -1,5 +1,5 @@
 import spotipy
-from functions import get_name, get_image, get_genres_mode, get_ids, get_playlistsnames, get_artistsids, get_allartists, get_mode, get_musicnames, get_incommonmusics, get_artistgenre
+from functions import get_name, get_image, get_genres_mode, get_ids, get_playlistsnames, get_artistsids, get_allartists, get_mode, get_musics, get_incommonmusics, get_artistgenre
 
 
 class Look_For_User():
@@ -35,12 +35,14 @@ class Look_For_User():
     def get_artist(self):
         allartists = get_allartists(self.playlistdata)
         artist = get_mode(allartists)
-        artistdata = self.sp.search(q='artist:' + f"{artist}", type='artist')
+        artistdata = self.sp.artist(artist)
+        artistname = artistdata["name"]
         genre = get_artistgenre(artistdata)
-        photo = artistdata["artists"]["items"][0]["images"][0]["url"]
-        return artist, genre, photo
+        photo = artistdata["images"][0]["url"]
+        album = self.sp.artist_albums(artist)["items"][0]["id"]
+        return artistname, genre, photo, album
 
     def get_incommon(self):
-        usermusics = get_musicnames(self.playlistdata)
-        mymusics = get_musicnames(self.myplaylistdata)
+        usermusics = get_musics(self.playlistdata)
+        mymusics = get_musics(self.myplaylistdata)
         return get_incommonmusics(usermusics, mymusics)

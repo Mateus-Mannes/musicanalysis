@@ -71,7 +71,15 @@ def look_users():
     auth_manager = spotipy.oauth2.SpotifyOAuth(cache_path=session_cache_path())
     if request.method == 'POST':
         query = Look_For_User(request.form.get('username'), auth_manager)
-        return render_template('look.html', name=query.name, cop=query.get_playlists(), img=query.img, genres=query.get_genres(), fav = query.get_artist()[0], genre = query.get_artist()[1], photo = query.get_artist()[2], incommon = query.get_incommon())
+        return render_template('look.html', name=query.name, 
+                                            cop=query.get_playlists(), 
+                                            img=query.img, 
+                                            genres=query.get_genres(), 
+                                            fav = query.get_artist()[0], 
+                                            genre = query.get_artist()[1], 
+                                            photo = query.get_artist()[2], 
+                                            incommon = query.get_incommon(),
+                                            album = query.get_artist()[3])
     if not auth_manager.get_cached_token():
         return redirect('/')
     return render_template('look.html', method='get')
