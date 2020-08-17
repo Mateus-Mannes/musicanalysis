@@ -115,3 +115,18 @@ def get_artistgenre(artistdata):
     except IndexError:
         genre = artistdata["genres"]
     return genre
+
+
+def get_topfive(top):
+    topfive = []
+    for i in range(5):
+        topfive.append([top["items"][i]["name"], top["items"][i]["id"]])
+    return(topfive)
+
+
+def get_allgenres(artists):
+    genres = []
+    for i in range(len(artists["items"])):
+        for genre in artists["items"][i]["genres"]:
+            genres.append(genre)
+    return genres

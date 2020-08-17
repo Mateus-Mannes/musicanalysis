@@ -1,5 +1,5 @@
 import spotipy
-from functions import get_name, get_image, get_genres_mode, get_ids, get_playlistsnames, get_artistsids, get_allartists, get_mode, get_musics, get_incommonmusics, get_artistgenre
+from functions import get_name, get_image, get_genres_mode, get_ids, get_playlistsnames, get_artistsids, get_allartists, get_mode, get_musics, get_incommonmusics, get_artistgenre, get_topfive, get_allgenres
 
 
 class Look_For_User():
@@ -46,3 +46,25 @@ class Look_For_User():
         usermusics = get_musics(self.playlistdata)
         mymusics = get_musics(self.myplaylistdata)
         return get_incommonmusics(usermusics, mymusics)
+
+
+class Profile():
+
+    def __init__(self, usuario):
+        self.sp = spotipy.Spotify(auth_manager=usuario)
+        self.top = self.sp.current_user_top_artists()
+
+    def get_topartists(self):
+        return get_topfive(self.top)
+
+    def get_topgenre(self):
+        allgenres = get_allgenres(self.top)
+        return get_mode(allgenres)
+
+    def get_toptracks(self):
+        toptracks = self.sp.current_user_top_tracks()
+        return get_topfive(toptracks)
+
+    def get_playlists(self):
+        playlistdata = self.sp.current_user_playlists()
+        return get_playlistsnames(playlistdata)
