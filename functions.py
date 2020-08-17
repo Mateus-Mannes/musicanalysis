@@ -1,6 +1,14 @@
 from collections import Counter
+import spotipy
 
-#def check_user(username):
+
+def check_user(user, usuario):
+    sp = spotipy.Spotify(auth_manager=usuario)
+    try:
+        sp.user(user)
+        return True
+    except:
+        return False
 
 
 def get_name(playlists):
@@ -33,7 +41,7 @@ def get_playlistsnames(playlists):
     if playlists["items"] != []:
         playlistsnames = []
         for i in range(len(playlists["items"])):
-            playlistsnames.append((playlists["items"][i]["name"],(playlists["items"][i]["id"])))
+            playlistsnames.append((playlists["items"][i]["name"], (playlists["items"][i]["id"])))
     else:
         playlistsnames = "no"
     return playlistsnames
@@ -107,4 +115,3 @@ def get_artistgenre(artistdata):
     except IndexError:
         genre = artistdata["genres"]
     return genre
-
