@@ -1,4 +1,4 @@
-__pycache__/
-.flask_session/
-.mypy_cache/
-.spotify_caches/
+*/__pycache__/*
+*/flask_session/*
+*/mypy_cache/*
+*/spotify_caches/*
