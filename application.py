@@ -5,6 +5,7 @@ import spotipy
 import uuid
 from main import Look_For_User
 from login import login_required
+from functions import check_user
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.urandom(64)
@@ -70,16 +71,20 @@ def create_playlist():
 def look_users():
     auth_manager = spotipy.oauth2.SpotifyOAuth(cache_path=session_cache_path())
     if request.method == 'POST':
-        query = Look_For_User(request.form.get('username'), auth_manager)
-        return render_template('look.html', name=query.name, 
-                                            cop=query.get_playlists(), 
-                                            img=query.img, 
-                                            genres=query.get_genres(), 
-                                            fav = query.get_artist()[0], 
-                                            genre = query.get_artist()[1], 
-                                            photo = query.get_artist()[2], 
-                                            incommon = query.get_incommon(),
-                                            album = query.get_artist()[3])
+        user = request.form.get('username')
+        if check_user(user, auth_manager) is True:
+            query = Look_For_User(user, auth_manager)
+            return render_template('look.html', name=query.name,
+                                                cop=query.get_playlists(),
+                                                img=query.img,
+                                                genres=query.get_genres(),
+                                                fav = query.get_artist()[0],
+                                                genre = query.get_artist()[1],
+                                                photo = query.get_artist()[2],
+                                                album = query.get_artist()[3],
+                                                incommon = query.get_incommon())
+        else:
+            return render_template('user_error.html')
     if not auth_manager.get_cached_token():
         return redirect('/')
     return render_template('look.html', method='get')
