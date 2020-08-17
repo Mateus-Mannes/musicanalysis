@@ -7,7 +7,7 @@ def get_name(playlists):
     try:
         name = playlists["items"][0]["owner"]["display_name"]
     except:
-        name = "this user"
+        name = playlists["items"][0]["owner"]["id"]
     return name
 
 
