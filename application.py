@@ -3,7 +3,7 @@ from flask import Flask, session, request, redirect, render_template
 from flask_session import Session
 import spotipy
 import uuid
-from main import Look_For_User, Profile
+from main import Look_For_User, Profile, Playlist_Statistics
 from login import login_required
 from functions import check_user
 
@@ -64,7 +64,6 @@ def profile():
                                             playlists = query.get_playlists())
     if not auth_manager.get_cached_token():
         return redirect('/')
-                                            
 
 
 @app.route('/create', methods=['GET'])
