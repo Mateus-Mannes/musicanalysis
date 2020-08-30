@@ -3,7 +3,7 @@ from flask import Flask, session, request, redirect, render_template
 from flask_session import Session
 import spotipy
 import uuid
-from main import Look_For_User
+from main import Look_For_User, Profile, Playlist_Statistics
 from login import login_required
 from functions import check_user
 
@@ -42,14 +42,13 @@ def logout():
 def login():
     if not session.get('uuid'):
         session['uuid'] = uuid.uuid4()
-    auth_manager = spotipy.oauth2.SpotifyOAuth(scope='user-read-currently-playing playlist-modify-private',
+    auth_manager = spotipy.oauth2.SpotifyOAuth(scope='user-read-currently-playing playlist-modify-private user-read-recently-played user-top-read',
                                                 cache_path=session_cache_path(),
                                                 show_dialog=True)
     if request.args.get("code"):
         auth_manager.get_access_token(request.args.get("code"))
         return redirect('/profile')
     if not auth_manager.get_cached_token():
-        # Step 2. Display sign in link when no token
         auth_url = auth_manager.get_authorize_url()
         return redirect(auth_url)
 
@@ -57,7 +56,14 @@ def login():
 @app.route('/profile', methods=['GET'])
 @login_required
 def profile():
-    return render_template('profile.html')
+    auth_manager = spotipy.oauth2.SpotifyOAuth(cache_path=session_cache_path())
+    query = Profile(auth_manager)
+    return render_template('profile.html', artists = query.get_topartists(),
+                                            genre = query.get_topgenre(),
+                                            tracks = query.get_toptracks(),
+                                            playlists = query.get_playlists())
+    if not auth_manager.get_cached_token():
+        return redirect('/')
 
 
 @app.route('/create', methods=['GET'])
