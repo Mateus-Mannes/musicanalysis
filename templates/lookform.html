@@ -1,0 +1,34 @@
+{% extends "layout.html" %}
+{% block main %} 
+<body onload="myFunction('{{ status }}')">                                                           
+  <div class="con" style="padding: 1cm;" >
+   
+    <h3 style="color: white" class="text-center">Look for users musical taste based on their public playlists</h3>
+    <form class="form-inline" id="topicForm" action="/look%20users" method="POST">
+      <input type="text" id="inputTopic" name="username" class="form-control mb-2 mr-sm-2" placeholder="User name our user Url" required autofocus/>
+      <button style="margin: auto;" type="submit" id="btn-one" class="btn btn-primary mb-2">
+        search
+      </button>
+    </form>
+  </div>
+  {% if status == "not_found" %}
+  <h3 class="text-center"  style="color: white">Sorry, we couldn't find that user. Maybe you have written it in a wrong wat, look how to get the user link:</h3>
+  {% endif %}
+</body>
+
+  <script>
+  document.querySelector('#btn-one').onclick = function() {
+    var element = document.getElementById("btn-one");
+    if(document.getElementById("inputTopic").value != "") {
+      element.innerHTML = "<div  style='height: 20px; width: 20px' class='spinner-border' role='status'><span class='sr-only'>Loading...</span></div>";
+    }
+    };
+    function myFunction(status) {
+      if(status == "no playlists"){
+        alert("Sorry, this user don't have public playlists to be analyzed");
+      }
+  
+}
+  </script>
+
+{% endblock %}

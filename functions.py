@@ -3,10 +3,11 @@ from collections import Counter
 import pandas as pd
 
 
-def check_user(user, usuario):
-    sp = spotipy.Spotify(auth_manager=usuario)
+def check_user(user, usuario): 
     try:
-        sp.user(user)
+        sp = spotipy.Spotify(auth_manager=usuario)
+        x = sp.user_playlists(user, limit=5)
+        print(x)
         return True
     except:
         return False
@@ -16,7 +17,7 @@ def get_name(playlists):
     try:
         name = playlists["items"][0]["owner"]["display_name"]
     except:
-        name = "this user"
+        name = "no name"
     return name
 
 
@@ -24,7 +25,7 @@ def get_image(userdata):
     try:
         img = userdata["images"][0]["url"]
     except:
-        img = "no"
+        img = "static/user.png"
     return img
 
 
@@ -49,9 +50,13 @@ def get_playlistsnames(playlists):
     if playlists["items"] != []:
         playlistsnames = []
         for i in range(len(playlists["items"])):
-            playlistsnames.append((playlists["items"][i]["name"], (playlists["items"][i]["id"])))
+            nameSize = len(playlists["items"][i]["name"])
+            if nameSize > 23:
+                playlistsnames.append((playlists["items"][i]["name"][0:20] + "...", (playlists["items"][i]["id"])))
+            else:
+                playlistsnames.append((playlists["items"][i]["name"], (playlists["items"][i]["id"])))
     else:
-        playlistsnames = "no"
+        return playlists["items"]
     return playlistsnames
 
 

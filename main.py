@@ -9,6 +9,8 @@ class Look_For_User():
         self.playlists = self.sp.user_playlists(user, limit=5)
         self.myplaylists = self.sp.current_user_playlists(limit=5)
         self.name = f.get_name(self.playlists)
+        if self.name == "no name":
+            self.name = user
         self.img = f.get_image(self.sp.user(user))
         self.ids = f.get_ids(self.playlists)
         self.myids = f.get_ids(self.myplaylists)
@@ -37,7 +39,7 @@ class Look_For_User():
         genre = f.get_artistgenre(artistdata)
         photo = artistdata["images"][0]["url"]
         album = self.sp.artist_albums(artist)["items"][0]["id"]
-        return artistname, genre, photo, album
+        return {"name": artistname, "genre": genre, "photo": photo, "album": album}
 
     def get_incommon(self):
         usermusics = f.get_musics(self.playlistdata)
