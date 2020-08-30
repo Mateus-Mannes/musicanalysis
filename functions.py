@@ -7,7 +7,6 @@ def check_user(user, usuario):
     try:
         sp = spotipy.Spotify(auth_manager=usuario)
         x = sp.user_playlists(user, limit=5)
-        print(x)
         return True
     except:
         return False
