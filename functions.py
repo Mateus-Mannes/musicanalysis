@@ -3,10 +3,10 @@ from collections import Counter
 import pandas as pd
 
 
-def check_user(user, usuario): 
+def check_user(user, usuario):
     try:
         sp = spotipy.Spotify(auth_manager=usuario)
-        x = sp.user_playlists(user, limit=5)
+        sp.user_playlists(user, limit=5)
         return True
     except:
         return False

@@ -82,10 +82,10 @@ def look_users():
         user = request.form.get('username')
         if "https://open.spotify.com/user/" in user:
             user = user.replace("https://open.spotify.com/user/", "")
-        
+
         if check_user(user, auth_manager):
             query = Look_For_User(user, auth_manager)
-        
+
             if query.get_playlists() == []:
                 return render_template('lookform.html', status="no playlists")
 
@@ -96,7 +96,5 @@ def look_users():
                                                 favoriteArtist = query.get_artist(),
                                                 incommon = query.get_incommon())
         else:
-            return render_template('lookform.html', status="not found")
+            return render_template('lookform.html', status="notfound")
     return render_template('lookform.html', status="ok")
-
-

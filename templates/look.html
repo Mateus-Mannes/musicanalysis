@@ -16,7 +16,7 @@
         </div>
         <h3 class="text-center text pad">User: {{ name }}</h3>
 
-        <h3 class="text-center text pad" style="margin-top:1cm; margin-bottom: 1cm;">This are some of the user playlists</h3>
+        <h3 class="text-center text pad" style="margin-top:1cm; margin-bottom: 1cm;">Some of {{ name }}'s playlists are:</h3>
         <div class="accordion" id="accordionExample">
 
             {% set numbers = { 1: "One", 2: "Two", 3: "Three", 4: "Four", 5: "Five"} %}
@@ -104,8 +104,8 @@
         {% else %}
             <h3 class="text-center text" style="margin-top:1cm;">Some songs that you have in common</h3>
             <h3 class="text-center text" style="margin-bottom: 1cm;">whith {{ name }} are:</h3>
-            <h3 class="text-center text" style="margin-top:1cm;">Sorry, we didn't find incommon musics between the user public playlists
-            and yours</h3>
+            <h3 class="text-center text" style="margin-top:1cm;">Sorry, we didn't find any in common musics between the user's public playlists
+            and yours.</h3>
         {% endif %}
  
         <p class="text-center" style="padding-top: 2cm; padding-bottom: 2cm; color: white;">Data provided by 
