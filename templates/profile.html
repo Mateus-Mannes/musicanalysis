@@ -1,7 +1,41 @@
-  
 {% extends "layout.html" %}
 {% block main %}
 
-<p>TODO</p>
+        <div style = "position:fixed; left:130px; top:150px;">
+            <ul>
+                <p> Top 5 artists:  </p>
+                {% for a in artists %}
+                    <li>{{ a }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+
+    <div style = "position:fixed; left:700px; top:150px;">
+        <ul>
+            <p> Main genre:  </p>
+                <li>{{ genre }}</li>
+        </ul>
+    </div>
+
+    <div style = "position:fixed; left:130px; top:400px;">
+        <ul>
+            <p> Top 5 tracks:  </p>
+            {% for t in tracks %}
+                <li>{{ t }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+
+    <div style = "position:fixed; left:700px; top:400px;">
+        <ul>
+            <p> Playlists:  </p>
+            {% for p in playlists %}
+                <li>{{ p }}</li>
+            {% endfor %}
+        </ul>
+    </div>
 
 {% endblock %}
+

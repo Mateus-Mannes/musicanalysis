@@ -1,5 +1,5 @@
 import spotipy
-from functions import get_name, get_image, get_genres_mode, get_ids, get_playlistsnames, get_artistsids, get_allartists, get_mode, get_musics, get_incommonmusics, get_artistgenre
+import functions as f
 
 
 class Look_For_User():
@@ -8,43 +8,89 @@ class Look_For_User():
         self.sp = spotipy.Spotify(auth_manager=usuario)
         self.playlists = self.sp.user_playlists(user, limit=5)
         self.myplaylists = self.sp.current_user_playlists(limit=5)
-        self.name = get_name(self.playlists)
+        self.name = f.get_name(self.playlists)
         if self.name == "no name":
             self.name = user
-        self.img = get_image(self.sp.user(user))
-        self.ids, self.myids = get_ids(self.playlists, self.myplaylists)
-        self.playlistdata = []
-        self.myplaylistdata = []
-        for i in range(len(self.ids)):
-            self.playlistdata.append(self.sp.user_playlist(user, self.ids[i]))
-        for i in range(len(self.myids)):
-            self.myplaylistdata.append(self.sp.user_playlist(self.sp.me()["id"], self.myids[i]))
+        self.img = f.get_image(self.sp.user(user))
+        self.ids = f.get_ids(self.playlists)
+        self.myids = f.get_ids(self.myplaylists)
+        self.playlistdata = f.get_playlitsdata(self.ids, self.sp)
+        self.myplaylistdata = f.get_playlitsdata(self.myids, self.sp)
 
     def get_playlists(self):
-        return get_playlistsnames(self.playlists)
+        return f.get_playlistsnames(self.playlists)
 
     def get_genres(self):
         genres = []
         for i in range(len(self.playlistdata)):
             playlist = self.playlistdata[i]
-            artists = get_artistsids(playlist)
+            artists = f.get_artistsids(playlist)
             artistFullData = self.sp.artists(artists)
-            mode = (get_genres_mode(artistFullData))
+            mode = (f.get_genres_mode(artistFullData))
             if mode not in genres:
                 genres.append(mode)
         return genres
 
     def get_artist(self):
-        allartists = get_allartists(self.playlistdata)
-        artist = get_mode(allartists)
+        allartists = f.get_allartists(self.playlistdata)
+        artist = f.get_mode(allartists)
         artistdata = self.sp.artist(artist)
         artistname = artistdata["name"]
-        genre = get_artistgenre(artistdata)
+        genre = f.get_artistgenre(artistdata)
         photo = artistdata["images"][0]["url"]
         album = self.sp.artist_albums(artist)["items"][0]["id"]
         return {"name": artistname, "genre": genre, "photo": photo, "album": album}
 
     def get_incommon(self):
-        usermusics = get_musics(self.playlistdata)
-        mymusics = get_musics(self.myplaylistdata)
-        return get_incommonmusics(usermusics, mymusics)
+        usermusics = f.get_musics(self.playlistdata)
+        mymusics = f.get_musics(self.myplaylistdata)
+        return f.get_incommonmusics(usermusics, mymusics)
+
+
+class Profile():
+
+    def __init__(self, usuario):
+        self.sp = spotipy.Spotify(auth_manager=usuario)
+        self.top = self.sp.current_user_top_artists()
+
+    def get_topartists(self):
+        return f.get_topfive(self.top)
+
+    def get_topgenre(self):
+        allgenres = f.get_allgenres(self.top)
+        return f.get_mode(allgenres)
+
+    def get_toptracks(self):
+        toptracks = self.sp.current_user_top_tracks()
+        return f.get_topfive(toptracks)
+
+    def get_playlists(self):
+        playlistdata = self.sp.current_user_playlists()
+        return f.get_playlistsnames(playlistdata)
+
+
+class Playlist_Statistics():
+
+    def __init__(self, playlistid, usuario):
+        self.sp = spotipy.Spotify(auth_manager=usuario)
+        self.playlistdata = f.get_playlitsdata(playlistid, self.sp)
+        self.audio_features = f.get_audiofeatures(self.playlistdata, self.sp)
+        self.df = f.get_dataframe(self.playlistdata, self.audio_features)
+
+    def get_mfeatures(self):
+        mostpopular = f.maximum(self.df, "popularity")
+        longest = f.maximum(self.df, "duration_ms")
+        happiest = f.maximum(self.df, "valence")
+        lesspopular = f.minimum(self.df, "popularity")
+        shortest = f.minimum(self.df, "duration_ms")
+        saddest = f.minimum(self.df, "valence")
+        return mostpopular, longest, happiest, lesspopular, shortest, saddest
+
+    def get_avgfeatures(self):
+        avg = self.df.mean()
+        danceability = avg["danceability"]
+        energy = avg["energy"]
+        acousticness = avg["acousticness"]
+        instrumentalness = avg["instrumentalness"]
+        valence = avg["valence"]
+        return danceability, energy, acousticness, instrumentalness, valence
