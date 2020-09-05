@@ -1,115 +1,118 @@
 {% extends "layout.html" %}
 {% block main %}
 
-<body style="background-color:#2C2E33;">
+    <style>
+        .text{color:white;}
+        .playlists{margin-bottom:0.3cm; width:200px;}
+        .pad{padding-left:1cm; padding-right: 1cm;}
+    
+    </style>
 
-<form action="/look%20users" method="post">
-    <div class="form-row align-items-center">
-      <div class="col-auto" id="caixa">
-        <input autocomplete="off" class="form-control mb-2" name="username" placeholder="Username" type="text">
-      </div>
-      <button class="btn btn-success" type="submit" id="botão">Search</button>
-</form>
+    <div style="background-color: #2C2E33; padding-top: 1cm; padding-bottom: 1cm">
 
-<style type="text/css">
-
-.btn btn-light {
-    position: fixed;
-  }
-  #botão {
-    position: fixed;
-    top: 75px;
-    left: 885px;
-  }
-
-.col-auto{
-    position: fixed;
-  }
-  #caixa {
-    position: fixed;
-    top: 75px;
-    left: 660px;
-}
-
-body {
-        color: whitesmoke;
-        font-family:"Trebuchet MS";
-    }
-
-</style>
-
-{% if method != 'get' %}
-
-    {% if img != 'no' %}
-
-    <div style="width:100px; height:100px;overflow:hidden;position:fixed; left:20; top:170px;border-radius: 50%">
-        <img src={{ img }} style="max-width:150px;max-height:150px">
-    </div>
-
-    {% endif %}
-
-    {% if cop != 'no' %}
-
-        <div style = "position:fixed; left:130px; top:150px;">
-            <ul>
-                <p> The most recent playlists by {{name}} are:  </p>
-                {% for x in cop %}
-                    <li>{{ x }}</li>
-                {% endfor %}
-            </ul>
+        <p style="margin-top:2cm"></p>
+        <div style="width:100px; height:100px;overflow:hidden;border-radius: 50%; margin: auto;">
+            <img src={{ img }} style="max-width:150px;max-height:150px">
         </div>
+        <h3 class="text-center text pad">User: {{ name }}</h3>
 
-    {% else %}
+        <h3 class="text-center text pad" style="margin-top:1cm; margin-bottom: 1cm;">Some of {{ name }}'s playlists are:</h3>
+        <div class="accordion" id="accordionExample">
 
-    <div style = "position:relative; left:130px; top:150px;">
-        <p> Ooops! It looks like {{ name }} doesn't have any public playlist. </p>
+            {% set numbers = { 1: "One", 2: "Two", 3: "Three", 4: "Four", 5: "Five"} %}
+            {% for i in range(playlists|length) %}
+
+                <p class="text-center">
+                    <button class="btn btn-success playlists" type="button" data-toggle="collapse" data-target="#collapse{{ numbers[i+1] }}" 
+                    {% if i == 0 %}
+                    aria-expanded="true" 
+                    {% else %}
+                    aria-expanded="false" 
+                    {% endif %}
+                    aria-controls="collapse{{ numbers[i+1] }}">
+                        {{ playlists[i][0] }}
+                    </button>
+                </p>
+                    
+                <div id="collapse{{ numbers[i+1] }}" 
+                    {% if i == 0 %}
+                        class="collapse show" 
+                    {% else %}
+                        class="collapse" 
+                    {% endif %}
+                    aria-labelledby="heading{{ numbers[i+1] }}" data-parent="#accordionExample">
+                    <div class="card-body">
+                        <p class="text-center">
+                            <iframe src={{"https://open.spotify.com/embed/playlist/" + playlists[i][1]}} width="300" height="380" frameborder="0" 
+                            allowtransparency="true" allow="encrypted-media"></iframe>
+                        </p>  
+                    </div>
+                </div>
+
+            {% endfor %}
+
+        </div>
+    
     </div>
 
-    {% endif %}
+    <div style="background-color:#5cb85c; padding: 1cm;">
 
-    <div style = "position:fixed; left:700px; top:150px;">
-        <ul>
-            <p> The main genres of {{name}}'s playlists are:  </p>
-            {% for y in genres %}
-                <li>{{ y }}</li>
+        <h3 class="text-center text" style="margin-top:1cm;">The most frequent artist of {{ name }} is {{ favoriteArtist["name"] }}</h3>
+        <p class="text-center text">Genre: {{ favoriteArtist["genre"] }}</p>
+        <div style="width:100px; height:100px;overflow:hidden;border-radius: 50%; margin: auto;">
+            <img src={{ favoriteArtist["photo"] }} style="max-width:150px;max-height:150px">
+        </div>
+        <p class="text-center" style="margin-top:1cm;">
+            <iframe src="https://open.spotify.com/embed/album/{{ favoriteArtist["album"] }}" width="300" height="80" frameborder="0" 
+            allowtransparency="true" allow="encrypted-media"></iframe>
+        </p>
+
+    </div>
+
+    <div style="background-color:white; padding: 1cm;">
+
+        <h3 class="text-center " style="margin-top:1cm;">The main genres of {{ name }}'s playlists are:</h3>
+        <p class="text-center">
+            {% set colors = {0: "primary", 1: "secondary", 2: "success", 3: "danger", 4: "warning"} %}
+            {% for i in range(genres|length) %}
+            <div class="alert alert-{{ colors[i] }} text-center" role="alert">
+                {{ genres[i] }}
+            </div>
             {% endfor %}
-        </ul>
+        </p>
+
+    </div>
+
+    <div style="background-color:#5bc0de; padding: 1cm;">
+        {% if incommon != [] %}
+            <h3 class="text-center text" style="margin-top:1cm;">Some songs that you have in common</h3>
+            <h3 class="text-center text" style="margin-bottom: 1cm;">whith {{ name }} are:</h3>
+            <p class="text-center" style="margin: auto; max-width: 680px;">
+                {% for i in range(incommon|length) %}
+                    {% if i != incommon|length - 1 %}
+                        <iframe src="https://open.spotify.com/embed/track/{{ incommon[i] }}" width="300" height="80" frameborder="0" 
+                        allowtransparency="true" allow="encrypted-media"></iframe>
+                    {% endif %}
+                {% endfor %}
+            </p>
+                {% if incommon|length > 0 %}
+                    <div style="text-align: center;">
+                    <iframe  src="https://open.spotify.com/embed/track/{{ incommon[incommon|length - 1] }}" width="300" height="80" frameborder="0" 
+                    allowtransparency="true" allow="encrypted-media"></iframe>
+                    </div>
+                {% endif %}
+        {% else %}
+            <h3 class="text-center text" style="margin-top:1cm;">Some songs that you have in common</h3>
+            <h3 class="text-center text" style="margin-bottom: 1cm;">whith {{ name }} are:</h3>
+            <h3 class="text-center text" style="margin-top:1cm;">Sorry, we didn't find any in common musics between the user's public playlists
+            and yours.</h3>
+        {% endif %}
+ 
+        <p class="text-center" style="padding-top: 2cm; padding-bottom: 2cm; color: white;">Data provided by 
+            <a href="http://spotify.com" target="_blank"><b>Spotify</b></a></p>
+          
     </div>
 
     
-    <div style="width:100px; height:100px;overflow:hidden;position:fixed; left:20; top:400px;border-radius: 50%">
-        <img src={{ photo }} style="max-width:150px;max-height:150px">
-    </div>
-
-    <div style = "position:fixed; left:130px; top:400px;">
-        <ul>
-            <p>The most frequent artist of {{name}} is {{fav}}  </p>
-            <p>Genre: {{genre}}</p>
-            <p>{{album}}</p>
-        </ul>
-    </div>
-
-    {% if comuns != '[]' %}
-
-    <div style = "position:fixed; left:700px; top:400px;">
-        <ul>
-            <p>Some songs that you have in common with {{name}} are:  </p>
-            {% for ic in incommon %}
-            <li>{{ ic }}</li>
-        {% endfor %}
-        </ul>
-    </div>
-
-    {% else %}
-
-    <div style = "position:fixed; left:700px; top:400px;">
-            <p>You don't have any songs in common with {{name}}.</p>
-    </div>
-
-    {% endif %}
-
-{% endif %}
 
 {% endblock %}
-
-</body>
