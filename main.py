@@ -50,11 +50,19 @@ class Look_For_User():
 class Profile():
 
     def __init__(self, usuario):
+        self.auth = usuario
         self.sp = spotipy.Spotify(auth_manager=usuario)
         self.top = self.sp.current_user_top_artists()
+        self.user = self.sp.me()
+        self.img = f.get_image(self.user)
+        self.name = f.get_current_name(self.user)
 
     def get_topartists(self):
-        return f.get_topfive(self.top)
+        return f.get_topfive_artists(self.top)
+
+    def get_playlists(self):
+        playlistdata = self.sp.current_user_playlists()
+        return f.get_playlistsnames(playlistdata)
 
     def get_topgenre(self):
         allgenres = f.get_allgenres(self.top)
@@ -62,16 +70,12 @@ class Profile():
 
     def get_toptracks(self):
         toptracks = self.sp.current_user_top_tracks()
-        return f.get_topfive(toptracks)
-
-    def get_playlists(self):
-        playlistdata = self.sp.current_user_playlists()
-        return f.get_playlistsnames(playlistdata)
-
+        return f.get_topfive_tracks(toptracks)
 
 class Playlist_Statistics():
 
-    def __init__(self, playlistid, usuario):
+    def __init__(self, playlistid, playlist_name, usuario):
+        self.playlist_name = playlist_name
         self.sp = spotipy.Spotify(auth_manager=usuario)
         self.playlistdata = f.get_playlitsdata(playlistid, self.sp)
         self.audio_features = f.get_audiofeatures(self.playlistdata, self.sp)
@@ -87,10 +91,9 @@ class Playlist_Statistics():
         return mostpopular, longest, happiest, lesspopular, shortest, saddest
 
     def get_avgfeatures(self):
-        avg = self.df.mean()
-        danceability = avg["danceability"]
-        energy = avg["energy"]
-        acousticness = avg["acousticness"]
-        instrumentalness = avg["instrumentalness"]
-        valence = avg["valence"]
+        danceability = self.df["danceability"].mean()
+        energy = self.df["energy"].mean()
+        acousticness = self.df["acousticness"].mean()
+        instrumentalness = self.df["instrumentalness"].mean()
+        valence = self.df["valence"].mean()
         return danceability, energy, acousticness, instrumentalness, valence

@@ -6,8 +6,6 @@ import uuid
 from main import Look_For_User, Profile, Playlist_Statistics
 from login import login_required
 from functions import check_user
-from werkzeug.exceptions import HTTPException
-
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.urandom(64)
@@ -19,15 +17,12 @@ caches_folder = './.spotify_caches/'
 if not os.path.exists(caches_folder):
     os.makedirs(caches_folder)
 
-
 def session_cache_path():
     return caches_folder + str(session.get('uuid'))
-
 
 @app.route('/', methods=['GET'])
 def index():
     return render_template('index.html')
-
 
 @app.route('/logout', methods=['GET'])
 def logout():
@@ -38,7 +33,6 @@ def logout():
     except OSError as e:
         print("Error: %s - %s." % (e.filename, e.strerror))
     return redirect('/')
-
 
 @app.route('/login', methods=['GET'])
 def login():
@@ -54,26 +48,21 @@ def login():
         auth_url = auth_manager.get_authorize_url()
         return redirect(auth_url)
 
-
 @app.route('/profile', methods=['GET'])
 @login_required
 def profile():
     auth_manager = spotipy.oauth2.SpotifyOAuth(cache_path=session_cache_path())
     query = Profile(auth_manager)
-    return render_template('profile.html', artists = query.get_topartists(),
-                                            genre = query.get_topgenre(),
-                                            tracks = query.get_toptracks(),
-                                            playlists = query.get_playlists())
-    if not auth_manager.get_cached_token():
-        return redirect('/')
-
-
-@app.route('/create', methods=['GET'])
-@login_required
-def create_playlist():
-    return render_template('create.html')
-
-
+    return render_template('nprofile.html', 
+                            name=query.name,
+                            img=query.img,
+                            tracks = query.get_toptracks(),
+                            tracks_length = len(query.get_toptracks()),
+                            genre =query.get_topgenre(),
+                            artists = query.get_topartists(),
+                            playlists = query.get_playlists(),
+                            )
+    
 @app.route('/look users', methods=["GET", "POST"])
 @login_required
 def look_users():

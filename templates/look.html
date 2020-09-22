@@ -5,14 +5,25 @@
         .text{color:white;}
         .playlists{margin-bottom:0.3cm; width:200px;}
         .pad{padding-left:1cm; padding-right: 1cm;}
-    
+        .muc {width: 300px; height:80px;}
+        .spot {width: 300px; height:380px;}
+        @media only screen and (max-width: 350px) {
+        .spot {width: 280px; height:360px;}
+        .muc{width: 280px; height:80px;}
+        }
+        .foto{
+        width:100px;
+        height:100px;
+        object-fit:cover;
+        border-radius: 50%;
+        }
     </style>
 
     <div style="background-color: #2C2E33; padding-top: 1cm; padding-bottom: 1cm">
 
         <p style="margin-top:2cm"></p>
-        <div style="width:100px; height:100px;overflow:hidden;border-radius: 50%; margin: auto;">
-            <img src={{ img }} style="max-width:150px;max-height:150px">
+        <div style="margin: auto;text-align: center">
+            <img src={{ img }} class="foto">
         </div>
         <h3 class="text-center text pad">User: {{ name }}</h3>
 
@@ -42,10 +53,12 @@
                     {% endif %}
                     aria-labelledby="heading{{ numbers[i+1] }}" data-parent="#accordionExample">
                     <div class="card-body">
-                        <p class="text-center">
-                            <iframe src={{"https://open.spotify.com/embed/playlist/" + playlists[i][1]}} width="300" height="380" frameborder="0" 
+                    
+                        <p class="text-center">  
+                            <iframe src={{"https://open.spotify.com/embed/playlist/" + playlists[i][1]}} class="spot" frameborder="0" 
                             allowtransparency="true" allow="encrypted-media"></iframe>
                         </p>  
+                    
                     </div>
                 </div>
 
@@ -55,18 +68,17 @@
     
     </div>
 
-    <div style="background-color:#5cb85c; padding: 1cm;">
+    <div style="background-color:#5cb85c; padding: 0.5cm;">
 
         <h3 class="text-center text" style="margin-top:1cm;">The most frequent artist of {{ name }} is {{ favoriteArtist["name"] }}</h3>
         <p class="text-center text">Genre: {{ favoriteArtist["genre"] }}</p>
-        <div style="width:100px; height:100px;overflow:hidden;border-radius: 50%; margin: auto;">
-            <img src={{ favoriteArtist["photo"] }} style="max-width:150px;max-height:150px">
+        <div style="margin: auto; text-align: center">
+            <img src={{ favoriteArtist["photo"] }} class="foto">
         </div>
         <p class="text-center" style="margin-top:1cm;">
-            <iframe src="https://open.spotify.com/embed/album/{{ favoriteArtist["album"] }}" width="300" height="80" frameborder="0" 
+            <iframe src="https://open.spotify.com/embed/album/{{ favoriteArtist["album"] }}" class="muc" frameborder="0" 
             allowtransparency="true" allow="encrypted-media"></iframe>
         </p>
-
     </div>
 
     <div style="background-color:white; padding: 1cm;">
@@ -83,21 +95,21 @@
 
     </div>
 
-    <div style="background-color:#5bc0de; padding: 1cm;">
+    <div style="background-color:#5bc0de; padding: 0.5cm;">
         {% if incommon != [] %}
             <h3 class="text-center text" style="margin-top:1cm;">Some songs that you have in common</h3>
             <h3 class="text-center text" style="margin-bottom: 1cm;">whith {{ name }} are:</h3>
             <p class="text-center" style="margin: auto; max-width: 680px;">
                 {% for i in range(incommon|length) %}
-                    {% if i != incommon|length - 1 %}
-                        <iframe src="https://open.spotify.com/embed/track/{{ incommon[i] }}" width="300" height="80" frameborder="0" 
+                    {% if i != incommon|length - 1 or incommon|length == 2 %}
+                        <iframe src="https://open.spotify.com/embed/track/{{ incommon[i] }}" class="muc" frameborder="0" 
                         allowtransparency="true" allow="encrypted-media"></iframe>
                     {% endif %}
                 {% endfor %}
             </p>
-                {% if incommon|length > 0 %}
+                {% if incommon|length > 0 and incommon|length != 2 %}
                     <div style="text-align: center;">
-                    <iframe  src="https://open.spotify.com/embed/track/{{ incommon[incommon|length - 1] }}" width="300" height="80" frameborder="0" 
+                    <iframe  src="https://open.spotify.com/embed/track/{{ incommon[incommon|length - 1] }}" class="muc" frameborder="0" 
                     allowtransparency="true" allow="encrypted-media"></iframe>
                     </div>
                 {% endif %}

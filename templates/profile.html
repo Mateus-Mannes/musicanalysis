@@ -32,7 +32,7 @@
         <ul>
             <p> Playlists:  </p>
             {% for p in playlists %}
-                <li>{{ p }}</li>
+                <li><a href="/playlist/{{ p[1] }}">{{ p }}</a></li>
             {% endfor %}
         </ul>
     </div>

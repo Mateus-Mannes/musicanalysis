@@ -11,6 +11,12 @@ def check_user(user, usuario):
     except:
         return False
 
+def get_current_name(user):
+    if user['display_name'] != '':
+        return user['display_name']
+    else:
+        return user['id']
+    
 
 def get_name(playlists):
     try:
@@ -129,7 +135,14 @@ def get_artistgenre(artistdata):
     return genre
 
 
-def get_topfive(top):
+def get_topfive_artists(top):
+    topfive = []
+    for i in range(5):
+        topfive.append([top["items"][i]["name"], top["items"][i]["id"], top["items"][i]["images"][0]["url"]])
+    return(topfive)
+
+
+def get_topfive_tracks(top):
     topfive = []
     for i in range(5):
         topfive.append([top["items"][i]["name"], top["items"][i]["id"]])
@@ -147,21 +160,30 @@ def get_allgenres(artists):
 def get_audiofeatures(playlistdata, sp):
     ids = []
     features = []
-    for i in range(len(playlistdata["items"])):
-        ids.append(playlistdata["items"][i]["track"]["id"])
+    ids = get_tracks_ids(playlistdata)
     for x in ids:
         features.append(sp.audio_features(x))
     return features
 
+def get_tracks_ids(tracks):
+    ids = []
+    for i in range(len(tracks["items"])):
+        try:
+            ids.append(tracks["items"][i]["track"]["id"])
+        except:
+            continue
+    return ids
 
 def get_dataframe(playlistdata, audio_features):
     ids = []
-    for i in range(len(playlistdata["items"])):
-        ids.append(playlistdata["items"][i]["track"]["id"])
+    ids = get_tracks_ids(playlistdata)
     df = pd.DataFrame(columns=["name", "popularity", "danceability", "energy", "acousticness", "instrumentalness", "valence", "duration_ms"], index = ids)
     for i in range(len(playlistdata["items"])):
-        df.loc[playlistdata["items"][i]["track"]["id"], "name"] = playlistdata["items"][i]["track"]["name"]
-        df.loc[playlistdata["items"][i]["track"]["id"], "popularity"] = playlistdata["items"][i]["track"]["popularity"]
+        try:
+            df.loc[playlistdata["items"][i]["track"]["id"], "name"] = playlistdata["items"][i]["track"]["name"]
+            df.loc[playlistdata["items"][i]["track"]["id"], "popularity"] = playlistdata["items"][i]["track"]["popularity"]
+        except:
+            continue
     for audio in audio_features:
         df.loc[audio[0]["id"], "danceability"] = audio[0]["danceability"]
         df.loc[audio[0]["id"], "energy"] = audio[0]["energy"]
