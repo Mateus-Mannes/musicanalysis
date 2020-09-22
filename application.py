@@ -53,7 +53,7 @@ def login():
 def profile():
     auth_manager = spotipy.oauth2.SpotifyOAuth(cache_path=session_cache_path())
     query = Profile(auth_manager)
-    return render_template('nprofile.html', 
+    return render_template('profile.html', 
                             name=query.name,
                             img=query.img,
                             tracks = query.get_toptracks(),

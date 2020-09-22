@@ -1,41 +1,86 @@
 {% extends "layout.html" %}
 {% block main %}
 
-        <div style = "position:fixed; left:130px; top:150px;">
-            <ul>
-                <p> Top 5 artists:  </p>
-                {% for a in artists %}
-                    <li>{{ a }}</li>
-                {% endfor %}
-            </ul>
+<style>
+    .text{color:white;}
+    .pad{padding-left:1cm; padding-right: 1cm;}
+    .tracks{padding-left:1cm; padding-right: 1cm;}
+    @media only screen and (max-width: 1030px) {
+    .tracks {padding-left:0cm; padding-right: 0cm;}
+    }
+    .myimg{
+    width:100px;
+    height:100px;
+    object-fit:cover;
+    border-radius: 50%;
+    }
+    .muc {width: 300px; height:80px;}
+    @media only screen and (max-width: 350px) {
+    .muc{width: 280px; height:80px;}
+    }
+</style>
+
+    <div style="background-color:#2C2E33; padding: 0.5cm;">
+        <p style="margin-top:2cm"></p>
+        <div style="text-align: center;margin: auto;">
+            <img src={{ img }} class="myimg">
         </div>
-
-
-    <div style = "position:fixed; left:700px; top:150px;">
-        <ul>
-            <p> Main genre:  </p>
-                <li>{{ genre }}</li>
-        </ul>
-    </div>
-
-    <div style = "position:fixed; left:130px; top:400px;">
-        <ul>
-            <p> Top 5 tracks:  </p>
-            {% for t in tracks %}
-                <li>{{ t }}</li>
+        <h3 class="text-center text pad" id="hello">Good Morning {{name}} !</h3>
+        <h3 class="text-center text pad">Top playlists:</h3>
+        <p class="text-center" style="margin: auto; max-width: 1000px;">
+            {% for i in range(playlists|length) %}
+                    <iframe src="https://open.spotify.com/embed/playlist/{{ playlists[i][1] }}" class="muc" frameborder="0" 
+                        allowtransparency="true" allow="encrypted-media"></iframe>
             {% endfor %}
-        </ul>
+        </p>
     </div>
 
-
-    <div style = "position:fixed; left:700px; top:400px;">
-        <ul>
-            <p> Playlists:  </p>
-            {% for p in playlists %}
-                <li><a href="/playlist/{{ p[1] }}">{{ p }}</a></li>
+    <div class="tracks" style="padding-top: 1cm; padding-bottom: 1cm; background-color: #00ff66;">
+        <h3 class="text-center text pad">Main favorite genre: {{ genre }} &#9835;</h3>
+        <h3 class="text-center text pad">Top Artists:</h3>
+        <div style="margin: auto; text-align: center; ">  
+            <div   div class="card-group tracks" >  
+                {% for artist in artists %}
+                    <div class="card" style="background-color:#00ff66;border-color: #00ff66;">
+                        <img style="text-align: center; margin: auto;" src={{artist[2]}} class="myimg">
+                        <font color="white">{{ artist[0] }}</font>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    
+    <div class="tracks" style=" padding-top: 1cm; padding-bottom: 1cm;background-color:#2C2E33">
+        <h3 class="text-center text pad" id="hello">Your Top Tracks:</h3>
+        <p class="text-center">
+            {% for i in range(tracks_length) %}
+                <iframe src="https://open.spotify.com/embed/track/{{ tracks[i][1] }}"  width="300px" height="380px" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
             {% endfor %}
-        </ul>
+        </p>
     </div>
 
+<script language=javascript type="text/javascript">
+    now = new Date
+    if (now.getHours () >= 0 && now.getHours () < 5)
+    {
+        var element = document.getElementById("hello");
+        element.innerHTML = "Good Night {{name}} !";
+    }
+            else if (now.getHours () >= 5 && now.getHours () < 12)
+    {
+        var element = document.getElementById("hello");
+        element.innerHTML = "Good morning {{name}} !";
+    }
+            else if (now.getHours () >= 12 && now.getHours () < 18)
+    {
+        var element = document.getElementById("hello");
+        element.innerHTML = "Good Evening {{name}} !";
+    }
+    else
+    {
+        var element = document.getElementById("hello");
+        element.innerHTML = "Good Night {{name}} !";
+    }
+</script>
+    
 {% endblock %}
-
