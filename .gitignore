@@ -1,4 +1,5 @@
 # Byte-compiled / optimized / DLL files
+spotify_caches/
 __pycache__/
 *.py[cod]
 *$py.class
@@ -8,8 +9,7 @@ __pycache__/
 
 # Distribution / packaging
 .Python
-.flask_session/
-.spotify_caches/
+flask_session/
 build/
 develop-eggs/
 dist/
