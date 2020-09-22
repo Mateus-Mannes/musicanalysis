@@ -5,7 +5,10 @@ import spotipy
 import uuid
 from main import Look_For_User, Profile, Playlist_Statistics
 from login import login_required
+from erro import apology
 from functions import check_user
+from werkzeug.exceptions import default_exceptions, HTTPException, InternalServerError
+from werkzeug.security import check_password_hash, generate_password_hash
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.urandom(64)
@@ -87,3 +90,13 @@ def look_users():
         else:
             return render_template('lookform.html', status="notfound")
     return render_template('lookform.html', status="ok")
+
+def errorhandler(e):
+    """Handle error"""
+    if not isinstance(e, HTTPException):
+        e = InternalServerError()
+    return apology(e.name, e.code)
+
+# Listen for errors
+for code in default_exceptions:
+    app.errorhandler(code)(errorhandler)
