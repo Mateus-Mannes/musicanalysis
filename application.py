@@ -4,17 +4,18 @@ from flask_session import Session
 import spotipy
 import uuid
 from main import Look_For_User, Profile, Playlist_Statistics
-from login import login_required
-from erro import apology
+from login_requirement import login_required
+from erro_handler import apology
 from functions import check_user
 from werkzeug.exceptions import default_exceptions, HTTPException, InternalServerError
-from werkzeug.security import check_password_hash, generate_password_hash
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.urandom(64)
 app.config['SESSION_TYPE'] = 'filesystem'
 app.config['SESSION_FILE_DIR'] = './flask_session/'
 Session(app)
+
+DATABASE = 'routes.db'
 
 caches_folder = './spotify_caches/'
 if not os.path.exists(caches_folder):
@@ -90,6 +91,16 @@ def look_users():
         else:
             return render_template('lookform.html', status="notfound")
     return render_template('lookform.html', status="ok")
+
+@app.route('/playlist/<variable>', methods=["GET"])
+@login_required
+def playlist(variable):
+    playlist_id = variable
+    auth_manager = spotipy.oauth2.SpotifyOAuth(cache_path=session_cache_path())
+    playlist_statistics = Playlist_Statistics(playlist_id, auth_manager)
+    musics_features = playlist_statistics.get_mfeatures()
+    average_features = playlist_statistics.get_avgfeatures()
+    return render_template('playlist.html', avg = average_features, msc = musics_features)
 
 def errorhandler(e):
     """Handle error"""

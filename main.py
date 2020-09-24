@@ -74,8 +74,7 @@ class Profile():
 
 class Playlist_Statistics():
 
-    def __init__(self, playlistid, playlist_name, usuario):
-        self.playlist_name = playlist_name
+    def __init__(self, playlistid, usuario):
         self.sp = spotipy.Spotify(auth_manager=usuario)
         self.playlistdata = f.get_playlitsdata(playlistid, self.sp)
         self.audio_features = f.get_audiofeatures(self.playlistdata, self.sp)

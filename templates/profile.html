@@ -33,6 +33,16 @@
                         allowtransparency="true" allow="encrypted-media"></iframe>
             {% endfor %}
         </p>
+        <div class="dropdown" style="text-align: center; margin: auto;">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Choose a playlist to analyze
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            {% for i in range(playlists|length) %}
+              <a id="link{{ i }}" class="dropdown-item" href="playlist/{{ playlists[i][1] }}"> {{playlists[i][0]}} </a>
+            {% endfor %}
+            </div>
+          </div>
     </div>
 
     <div class="tracks" style="padding-top: 1cm; padding-bottom: 1cm; background-color: #00ff66;">
@@ -81,6 +91,12 @@
         var element = document.getElementById("hello");
         element.innerHTML = "Good Night {{name}} !";
     }
+    {% for i in range(playlists|length) %}
+    document.querySelector('#link{{ i }}').onclick = function() {
+    var element = document.getElementById("dropdownMenuButton");
+    element.innerHTML = "<span>Loading...  </span><div  style='height: 20px; width: 20px' class='spinner-border' role='status'></div>";
+    };
+    {% endfor %}
 </script>
     
 {% endblock %}
