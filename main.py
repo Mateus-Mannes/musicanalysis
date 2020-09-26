@@ -90,9 +90,9 @@ class Playlist_Statistics():
         return mostpopular, longest, happiest, lesspopular, shortest, saddest
 
     def get_avgfeatures(self):
-        danceability = self.df["danceability"].mean()
-        energy = self.df["energy"].mean()
-        acousticness = self.df["acousticness"].mean()
-        instrumentalness = self.df["instrumentalness"].mean()
-        valence = self.df["valence"].mean()
+        danceability = round(self.df["danceability"].mean() * 100, 2)
+        energy = round(self.df["energy"].mean() * 100, 2)
+        acousticness = round(self.df["acousticness"].mean() * 100, 2)
+        instrumentalness = round(self.df["instrumentalness"].mean() * 100, 2)
+        valence = round(self.df["valence"].mean() * 100, 2)
         return danceability, energy, acousticness, instrumentalness, valence

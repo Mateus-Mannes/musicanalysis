@@ -26,7 +26,7 @@
             <img src={{ img }} class="myimg">
         </div>
         <h3 class="text-center text pad" id="hello">Good Morning {{name}} !</h3>
-        <h3 class="text-center text pad">Top playlists:</h3>
+       
         <p class="text-center" style="margin: auto; max-width: 1000px;">
             {% for i in range(playlists|length) %}
                     <iframe src="https://open.spotify.com/embed/playlist/{{ playlists[i][1] }}" class="muc" frameborder="0" 
