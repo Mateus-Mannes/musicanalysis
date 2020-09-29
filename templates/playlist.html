@@ -41,8 +41,51 @@
   </div>
 
 </div>
-    <p style="margin-top:2cm">{{avg}}</p>
-    <p>{{msc}}</p>
+
+<div style="background-color:#2C2E33; padding-top: 1cm; padding-bottom: 1cm; ">
+  <h3 class="text-center text pad">Tracks features:</h3>
+  <div style="margin: auto; text-align: center;">  
+
+    <div   div class="card-group tracks" >  
+     
+          <div class="card" style="background-color:#2C2E33;border-color: #2C2E33;">
+            <font color="white">Most Popular</font>
+            <iframe style=" text-align: center; margin: auto"  src="https://open.spotify.com/embed/track/{{ msc[0][1] }}" width="250" height="330" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+          </div>
+
+          <div class="card" style="background-color:#2C2E33;border-color: #2C2E33;">
+            <font color="white">Longest</font>
+            <iframe style=" text-align: center; margin: auto" src="https://open.spotify.com/embed/track/{{ msc[1][1] }}" width="250" height="330" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+          </div>
+
+          <div class="card" style="background-color:#2C2E33;border-color: #2C2E33;">
+            <font color="white">Happiest</font>
+            <iframe style=" text-align: center; margin: auto" src="https://open.spotify.com/embed/track/{{ msc[2][1] }}" width="250" height="330" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+          </div>
+  
+    </div>
+
+    <div   div class="card-group tracks" >  
+     
+      <div class="card" style="background-color:#2C2E33;border-color: #2C2E33;">
+        <font color="white">Less Popular</font>
+        <iframe style=" text-align: center; margin: auto" src="https://open.spotify.com/embed/track/{{ msc[3][1] }}" width="250" height="330" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+      </div>
+
+      <div class="card" style="background-color:#2C2E33;border-color: #2C2E33;">
+        <font color="white">Shortest</font>
+        <iframe style=" text-align: center; margin: auto" src="https://open.spotify.com/embed/track/{{ msc[4][1] }}" width="250" height="330" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+      </div>
+
+      <div class="card" style="background-color:#2C2E33;border-color: #2C2E33;">
+        <font color="white">Saddest</font>
+        <iframe style=" text-align: center; margin: auto" src="https://open.spotify.com/embed/track/{{ msc[5][1] }}" width="250" height="330" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+      </div>
+    </div>
+
+</div>
+</div>
+ 
 
   
 {% endblock %}

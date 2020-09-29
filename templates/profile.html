@@ -39,7 +39,7 @@
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
             {% for i in range(playlists|length) %}
-              <a id="link{{ i }}" class="dropdown-item" href="playlist/{{ playlists[i][1] }}"> {{playlists[i][0]}} </a>
+              <a id="link{{ i }}" class="dropdown-item" href="playlist-{{ playlists[i][1] }}"> {{playlists[i][0]}} </a>
             {% endfor %}
             </div>
           </div>

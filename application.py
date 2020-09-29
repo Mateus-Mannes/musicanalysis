@@ -92,7 +92,7 @@ def look_users():
             return render_template('lookform.html', status="notfound")
     return render_template('lookform.html', status="ok")
 
-@app.route('/playlist/<variable>', methods=["GET"])
+@app.route('/playlist-<variable>', methods=["GET"])
 @login_required
 def playlist(variable):
     playlist_id = variable
