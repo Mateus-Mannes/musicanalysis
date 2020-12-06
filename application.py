@@ -76,7 +76,9 @@ def look_users():
         user = request.form.get('username')
         if "https://open.spotify.com/user/" in user:
             user = user.replace("https://open.spotify.com/user/", "")
-
+        if "?si=" in user:
+            temp = user.split("?si=")
+            user = temp[0]
         if check_user(user, auth_manager):
             query = Look_For_User(user, auth_manager)
 
