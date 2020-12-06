@@ -3,5 +3,4 @@ Flask
 flask_session
 requests
 Spotipy
-collections
 Pandas
