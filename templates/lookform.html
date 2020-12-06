@@ -2,7 +2,7 @@
 {% block main %} 
 
 <body onload="myFunction('{{ status }}')">                                                           
-  <div class="con" style="padding: 1cm;" >
+  <div {% if status != "notfound" %}class="con"{% else %}class="con2"{%endif%} >
    
     <h3 style="color: white" class="text-center">Find out users musical taste based on their public playlists</h3>
     <form class="form-inline" id="topicForm" action="/look%20users" method="POST">
@@ -15,7 +15,7 @@
 {% if status == "notfound" %}
 
   <h3 class="text-center"  style="color: white">Sorry, we couldn't find that user. Maybe you have written it in a wrong way. Look how to get the user's URL:</h3>
-
+    <p class="text-center"><img src="static/howurl.gif" width="100%" style="max-width: 200px;"></p>
 {% endif %}
 </div>
 </body>
