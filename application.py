@@ -8,6 +8,7 @@ from login_requirement import login_required
 from erro_handler import apology
 from functions import check_user
 from werkzeug.exceptions import default_exceptions, HTTPException, InternalServerError
+import requests
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.urandom(64)
@@ -26,7 +27,7 @@ def session_cache_path():
 
 @app.route('/', methods=['GET'])
 def index():
-    return render_template('index.html')
+    return render_template('index.html', top_tracks_data=requests.get("http://mateusmedeiros.pythonanywhere.com/").text)
 
 @app.route('/logout', methods=['GET'])
 def logout():
