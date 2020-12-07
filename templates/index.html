@@ -5,6 +5,11 @@
       <img src="static/inlogo.png" width="100%" style="max-width: 300px;"> 
    </p>
    <p style="color:white; padding-left:1cm; padding-right: 1cm;" class="text-center">An web project to analyze data from Spotify about the music world.</p>
-   </div>
-   {{ top_tracks_data }}
+   <p hidden>{{top_tracks_data}}</p>
+   <script>
+      var user = JSON.parse('{{ top_tracks_data | tojson | safe}}');
+   </script>
+</div>
+
+ </div>
    {% endblock %}
