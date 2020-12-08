@@ -84,6 +84,43 @@ function filterFunction() {
   }
 }
 </script>
+<script>
+  function changeCountry(genre) {
+      count_genre = [['Country', 'Popularity']];
+      for(i in all)
+      {
+        if(i === "Global"){ continue; }
+        var count = 0;
+        var temp = all[i];
+        for(j in temp){
+          genres = all[i][j]["Genres"]
+          for(var h = 0; h < genres.length; h++)
+          {
+            if(genres[h] === genre)
+            {
+              count = count + 1;
+            }
+          }
+        }
+        count_genre.push([i, count]);
+      }
+      google.charts.load('current', {
+          'packages':['geochart'],
+          'mapsApiKey': 'AIzaSyATtbryoSOyktqnHutX5ek3N93bvcP2Q70'
+        });
+        google.charts.setOnLoadCallback(drawRegionsMap);
+
+        function drawRegionsMap() {
+          var data = google.visualization.arrayToDataTable(count_genre);
+
+          var options = {};
+
+          var chart = new google.visualization.GeoChart(document.getElementById('regions_div'));
+
+          chart.draw(data, options);
+        }
+  }
+</script>
 <div style="background-color: #2C2E33; padding-top: 1cm; padding-bottom: 1cm">
    <p class="text-center">
       <img src="static/inlogo.png" width="100%" style="max-width: 300px;"> 
@@ -91,17 +128,66 @@ function filterFunction() {
    <p style="color:white; padding-left:1cm; padding-right: 1cm;" class="text-center">An web project to analyze data from Spotify about the music world.</p>
    <p hidden>{{top_tracks_data}}</p>
    <script>
-      var user = JSON.parse('{{ top_tracks_data | tojson | safe}}');
+      var all = JSON.parse('{{ top_tracks_data | tojson | safe}}');
+      var count_genre = [['Country', 'Popularity']];
+      var genre = "pop";
+      for(i in all)
+      {
+        if(i === "Global"){ continue; }
+        var count = 0;
+        var temp = all[i];
+        for(j in temp){
+          genres = all[i][j]["Genres"]
+          for(var h = 0; h < genres.length; h++)
+          {
+            if(genres[h] === genre)
+            {
+              count = count + 1;
+            }
+          }
+        }
+        count_genre.push([i, count]);
+      }
    </script>
    <div class="dropdown">
       <button onclick="myFunction()" class="dropbtn">Pop</button>
       <div id="myDropdown" class="dropdown-content">
         <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
         {% for genre in genres %}
-        <a href="/">{{ genre }}</a>
+        <a  onclick="changeCountry('{{ genre }}');">{{ genre }}</a>
        {% endfor %}
       </div>
     </div>
 </div>
+
  </div>
+
+ <div id="1234">
+  <html>
+    <head>
+      <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+      <script type="text/javascript">
+        google.charts.load('current', {
+          'packages':['geochart'],
+          'mapsApiKey': 'AIzaSyATtbryoSOyktqnHutX5ek3N93bvcP2Q70'
+        });
+        google.charts.setOnLoadCallback(drawRegionsMap);
+
+        function drawRegionsMap() {
+          var data = google.visualization.arrayToDataTable(count_genre);
+
+          var options = {};
+
+          var chart = new google.visualization.GeoChart(document.getElementById('regions_div'));
+
+          chart.draw(data, options);
+        }
+      </script>
+    </head>
+    <body>
+      <div id="regions_div" style="width: 900px; height: 500px;">
+      </div>
+    </body>
+  </html>
+</div>
    {% endblock %}
