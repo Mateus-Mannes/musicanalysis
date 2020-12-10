@@ -27,7 +27,13 @@ def session_cache_path():
 
 @app.route('/', methods=['GET'])
 def index():
-    return render_template('index.html', top_tracks_data=requests.get("http://mateusmedeiros.pythonanywhere.com/").json())
+    data = requests.get("http://mateusmedeiros.pythonanywhere.com/").json()
+    genres = set({})
+    for country in data:
+        for track in data[country]:
+            for genre in data[country][track]["Genres"]:
+                genres.add(genre)
+    return render_template('index.html', top_tracks_data=data, genres = genres)
 
 @app.route('/logout', methods=['GET'])
 def logout():

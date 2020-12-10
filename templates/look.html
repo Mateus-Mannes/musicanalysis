@@ -67,7 +67,7 @@
     
     </div>
 
-    <div style="background-color:#5cb85c; padding: 0.5cm;">
+    <div style="background-image: url(static/g.jpg);background-repeat: no-repeat; background-size: cover;padding: 0.5cm;">
 
         <h3 class="text-center text" style="margin-top:1cm;">The most frequent artist of {{ name }} is {{ favoriteArtist["name"] }}</h3>
         <p class="text-center text">Genre: {{ favoriteArtist["genre"] }}</p>
@@ -119,6 +119,7 @@
             and yours.</h3>
         {% endif %}
  
+        <p style="margin-top:2cm;" class="text-center"><a href="/"><font color="green">Home |</font></a><a href="/profile"><font color="green"> analyze your profile</font></a></p>
         <p class="text-center" style="padding-top: 2cm; padding-bottom: 2cm; color: white;">Data provided by 
             <a href="http://spotify.com" target="_blank"><b>Spotify</b></a></p>
           
