@@ -35,6 +35,8 @@
 .dropdown {
   position: relative;
   display: inline-block;
+  margin-left: 0.5cm;
+  
 }
 
 /* Dropdown Content (Hidden by Default) */
@@ -120,6 +122,8 @@ function filterFunction() {
           chart.draw(data, options);
         }
         document.getElementById("myDropdown").classList.toggle("show");
+        var element = document.getElementById("dropbtn");
+        element.innerHTML = "click and choose a genre to analyze the popularity in the world: " + genre;
   }
 </script>
 <script>
@@ -158,16 +162,18 @@ function filterFunction() {
         count_genre.push([i, count]);
       }
    </script>
+  </div>
    <div class="dropdown">
-      <button onclick="myFunction()" class="dropbtn">Pop</button>
-      <div id="myDropdown" class="dropdown-content">
+    <p style="margin-left:0.3cm;margin-right:0.3cm"><a style="padding-left:0.3cm;padding-right:0.3cm;border-radius: 25px; background-color: #4CAF50; color: white" onclick="myFunction()" id="dropbtn">click and choose a genre to analyze the popularity in the world: pop</a>   
+    </br><small >popularity is the count of times the genre appears on the top 10 most listened tracks of the country</small> </p>
+     <div id="myDropdown" class="dropdown-content">
         <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
         {% for genre in genres %}
         <a  onclick="changeCountry('{{ genre }}');">{{ genre }}</a>
        {% endfor %}
       </div>
     </div>
-</div>
+
 
  </div>
 
@@ -199,4 +205,7 @@ function filterFunction() {
     </body>
   </html>
 </div>
+<small style="margin-left:0.5cm">daily updated data</small>
+<p class="text-center" style="padding-top: 2cm; padding-bottom: 2cm; color: black;">Data provided by 
+  <a href="http://spotify.com" target="_blank"><b>Spotify</b></a></p>
    {% endblock %}
