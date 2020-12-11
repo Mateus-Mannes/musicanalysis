@@ -12,11 +12,11 @@ Home: index page, with a graphic map of the popularity of a genre
 
 Profile: profile page, show data about the user playlist, top genre, top artists and top tracks. In this page there is also an option to choose one playlist to analyze, that redirect to an other page with data about tracks and features
 
-Look users: search page, there you can search for an other spotify user, by the user id o the share url, and if this user exists and has public playlists, it will be redirected to an page with analysis about his tracks.
+Look users: search page, there you can search for an other spotify user, by the user id or the share url, and if this user exists and has public playlists, you will be redirected to an page with analysis about his tracks.
 
 
 # code
-Every route has an class, they are all at main.py file, and they are using some generic function to deal with api data, from the functions.py file. the data from the index page map is been getting from https://github.com/Mateus-Mannes/top-country-tracks-api
+Every route has an class, they are all at main.py file, and they are using some generic functions to deal with api data, from the functions.py file. the data from the index page map is been getting from https://github.com/Mateus-Mannes/top-country-tracks-api
 
 
 # how run
