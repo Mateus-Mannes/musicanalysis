@@ -111,6 +111,10 @@ def playlist(variable):
     average_features = playlist_statistics.get_avgfeatures()
     return render_template('playlist.html', avg = average_features, msc = musics_features)
 
+@app.route('/about', methods=["GET"])
+def about():
+    return render_template('about.html')
+
 def errorhandler(e):
     """Handle error"""
     if not isinstance(e, HTTPException):

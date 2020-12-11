@@ -123,7 +123,9 @@ function filterFunction() {
         }
         document.getElementById("myDropdown").classList.toggle("show");
         var element = document.getElementById("dropbtn");
-        element.innerHTML = "click and choose a genre to analyze the popularity in the world: " + genre;
+        element.innerHTML = "click here and choose a genre to analyze the popularity in the world: " + genre + " &#8681;";
+        var element2 = document.getElementById("mapTitle");
+        element2.innerHTML = "<b>current popularity of " + genre + " in the world</b>";
   }
 </script>
 <script>
@@ -164,7 +166,7 @@ function filterFunction() {
    </script>
   </div>
    <div class="dropdown">
-    <p style="margin-left:0.3cm;margin-right:0.3cm"><a style="padding-left:0.3cm;padding-right:0.3cm;border-radius: 25px; background-color: #4CAF50; color: white" onclick="myFunction()" id="dropbtn">click and choose a genre to analyze the popularity in the world: pop</a>   
+    <p style="margin-left:0.3cm;margin-right:0.3cm"><a style="padding-left:0.3cm;padding-right:0.3cm;border-radius: 25px; background-color: #4CAF50; color: white" onclick="myFunction()" id="dropbtn">click here and choose a genre to analyze the popularity in the world: pop &#8681;</a>   
     </br><small >popularity is the count of times the genre appears on the top 10 most listened tracks of the country</small> </p>
      <div id="myDropdown" class="dropdown-content">
         <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
@@ -177,6 +179,7 @@ function filterFunction() {
 
  </div>
 
+ <p id="mapTitle" class="text-center"><b>current popularity of pop in the world</b></p>
  <div id="1234">
   <html>
     <head>
