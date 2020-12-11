@@ -36,3 +36,6 @@ take a look how register an app and get your CLIENT ID and SECRET and register a
 
 then run the command "flask run" in the cmd.
 
+
+# deploy
+the branch master of the repo is deployed at heroku (with automatic deploy when there is a push or commit), this is the reason of the Procfile. Take a look how to deploy an app like this in: https://www.youtube.com/watch?v=sqJSdJbOOU0
