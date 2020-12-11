@@ -16,7 +16,7 @@ Look users: search page, there you can search for an other spotify user, by the 
 
 
 # code
-Every route has an class, they are all at main.py file, and they are using some generic function to deal with api data, from the functions.py file.
+Every route has an class, they are all at main.py file, and they are using some generic function to deal with api data, from the functions.py file. the data from the index page map is been getting from https://github.com/Mateus-Mannes/top-country-tracks-api
 
 
 # how run
