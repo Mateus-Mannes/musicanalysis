@@ -123,7 +123,7 @@ function filterFunction() {
         }
         document.getElementById("myDropdown").classList.toggle("show");
         var element = document.getElementById("dropbtn");
-        element.innerHTML = "click here and choose a genre to analyze the popularity in the world: " + genre + " &#8681;";
+        element.innerHTML = genre + " &#8681;";
         var element2 = document.getElementById("mapTitle");
         element2.innerHTML = "<b>current popularity of " + genre + " in the world</b>";
   }
@@ -165,9 +165,18 @@ function filterFunction() {
       }
    </script>
   </div>
+  <p style="padding-left: 0.5cm; padding-right: 0.5cm;">click here and choose a genre to analyze the popularity in the world:</p>
+
    <div class="dropdown">
-    <p style="margin-left:0.3cm;margin-right:0.3cm"><a style="padding-left:0.3cm;padding-right:0.3cm;border-radius: 25px; background-color: #4CAF50; color: white" onclick="myFunction()" id="dropbtn">click here and choose a genre to analyze the popularity in the world: pop &#8681;</a>   
-    </br><small >popularity is the count of times the genre appears on the top 10 most listened tracks of the country</small> </p>
+    <div style="padding-left: 0.5cm; padding-right: 0.5cm;">
+          <div style="background-color: green; border-radius: 25px">
+          <p class="text-center">
+            <a style="color: white;padding-left: 0.3cm; padding-right: 0.3cm" onclick="myFunction()" id="dropbtn">
+             pop &#8681;
+        </a>
+      </p>
+      </div>
+  </div>  
      <div id="myDropdown" class="dropdown-content">
         <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
         {% for genre in genres %}
@@ -208,7 +217,11 @@ function filterFunction() {
     </body>
   </html>
 </div>
-<small style="margin-left:0.5cm">daily updated data</small>
+<p style="margin-left:0.5cm; padding-right: 0.5cm;"><small >
+  popularity is the count of times the genre appears on the top 10 most listened tracks of the country
+<br/>
+daily updated data</small>
+</p>
 <p style="margin-top:2cm;" class="text-center"><a href="/profile"><font color="green">analyze your profile |</font></a><a href="/look users"><font color="green"> analyze others users profiles</font></a></p>
 <p class="text-center" style="padding-top: 2cm; padding-bottom: 2cm; color: black;">Data provided by 
   <a href="http://spotify.com" target="_blank"><b>Spotify</b></a></p>
