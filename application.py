@@ -16,8 +16,6 @@ app.config['SESSION_TYPE'] = 'filesystem'
 app.config['SESSION_FILE_DIR'] = './flask_session/'
 Session(app)
 
-DATABASE = 'routes.db'
-
 caches_folder = './spotify_caches/'
 if not os.path.exists(caches_folder):
     os.makedirs(caches_folder)
@@ -27,6 +25,8 @@ def session_cache_path():
 
 @app.route('/', methods=['GET'])
 def index():
+    # REQUEST TO GET TOP TRACKS DATA FROM API
+    # SOURCE: https://github.com/Mateus-Mannes/top-country-tracks-api
     data = requests.get("http://mateusmedeiros.pythonanywhere.com/").json()
     genres = set({})
     for country in data:
@@ -39,10 +39,6 @@ def index():
 def logout():
     os.remove(session_cache_path())
     session.clear()
-    try:
-        os.remove(session_cache_path())
-    except OSError as e:
-        print("Error: %s - %s." % (e.filename, e.strerror))
     return redirect('/')
 
 @app.route('/login', methods=['GET'])

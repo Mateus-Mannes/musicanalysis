@@ -29,7 +29,7 @@ def get_image(userdata):
     try:
         img = userdata["images"][0]["url"]
     except:
-        img = "static/user.png"
+        img = "static/imgs/user.png"
     return img
 
 
