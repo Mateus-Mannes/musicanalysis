@@ -33,7 +33,7 @@ def index():
         for track in data[country]:
             for genre in data[country][track]["Genres"]:
                 genres.add(genre)
-    return render_template('index.html', top_tracks_data=data, genres = genres)
+    return render_template('index/index.html', top_tracks_data=data, genres = genres)
 
 @app.route('/logout', methods=['GET'])
 def logout():
@@ -60,7 +60,7 @@ def login():
 def profile():
     auth_manager = spotipy.oauth2.SpotifyOAuth(cache_path=session_cache_path())
     query = Profile(auth_manager)
-    return render_template('profile.html', 
+    return render_template('profile/profile.html', 
                             name=query.name,
                             img=query.img,
                             tracks = query.get_toptracks(),
@@ -70,7 +70,7 @@ def profile():
                             playlists = query.get_playlists(),
                             )
     
-@app.route('/look users', methods=["GET", "POST"])
+@app.route('/look-users', methods=["GET", "POST"])
 @login_required
 def look_users():
     auth_manager = spotipy.oauth2.SpotifyOAuth(cache_path=session_cache_path())
@@ -85,17 +85,17 @@ def look_users():
             query = Look_For_User(user, auth_manager)
 
             if query.get_playlists() == []:
-                return render_template('lookform.html', status="no playlists")
+                return render_template('look-for/look-form.html', status="no playlists")
 
-            return render_template('look.html', name=query.name,
+            return render_template('look-for/look.html', name=query.name,
                                                 playlists=query.get_playlists(),
                                                 img=query.img,
                                                 genres=query.get_genres(),
                                                 favoriteArtist = query.get_artist(),
                                                 incommon = query.get_incommon())
         else:
-            return render_template('lookform.html', status="notfound")
-    return render_template('lookform.html', status="ok")
+            return render_template('look-for/look-form.html', status="notfound")
+    return render_template('look-for/look-form.html', status="ok")
 
 @app.route('/playlist-<variable>', methods=["GET"])
 @login_required
@@ -105,11 +105,11 @@ def playlist(variable):
     playlist_statistics = Playlist_Statistics(playlist_id, auth_manager)
     musics_features = playlist_statistics.get_mfeatures()
     average_features = playlist_statistics.get_avgfeatures()
-    return render_template('playlist.html', avg = average_features, msc = musics_features)
+    return render_template('profile/playlist.html', avg = average_features, msc = musics_features)
 
 @app.route('/about', methods=["GET"])
 def about():
-    return render_template('about.html')
+    return render_template('about/about.html')
 
 def errorhandler(e):
     """Handle error"""

@@ -1,0 +1,158 @@
+{% extends "shared/layout.html" %}
+{% block main %}
+<style>
+    .text {
+        color: white;
+    }
+
+    .playlists {
+        margin-bottom: 0.3cm;
+        width: 200px;
+    }
+
+    .pad {
+        padding-left: 1cm;
+        padding-right: 1cm;
+    }
+
+    .muc {
+        width: 300px;
+        height: 80px;
+    }
+
+    .spot {
+        width: 300px;
+        height: 380px;
+    }
+
+    @media only screen and (max-width: 350px) {
+        .spot {
+            width: 280px;
+            height: 360px;
+        }
+
+        .muc {
+            width: 280px;
+            height: 80px;
+        }
+    }
+
+    .foto {
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+        border-radius: 50%;
+    }
+</style>
+
+<div style="background-color: #2C2E33; padding-top: 1cm; padding-bottom: 1cm">
+
+    <p style="margin-top:2cm"></p>
+    <div style="margin: auto;text-align: center">
+        <img src={{ img }} class="foto">
+    </div>
+    <h3 class="text-center text pad">User: {{ name }}</h3>
+
+    <h3 class="text-center text pad" style="margin-top:1cm; margin-bottom: 1cm;">Some of {{ name }}'s playlists are:</h3>
+    <div class="accordion" id="accordionExample">
+
+        {% set numbers = { 1: "One", 2: "Two", 3: "Three", 4: "Four", 5: "Five"} %}
+        {% for i in range(playlists|length) %}
+
+        <p class="text-center">
+            <button class="btn btn-success playlists" type="button" data-toggle="collapse" data-target="#collapse{{ numbers[i+1] }}"
+                    {% if i == 0 %}
+                    aria-expanded="true"
+                    {% else %}
+                    aria-expanded="false"
+                    {% endif %}
+                    aria-controls="collapse{{ numbers[i+1] }}">
+                {{ playlists[i][0] }}
+            </button>
+        </p>
+
+        <div id="collapse{{ numbers[i+1] }}"
+             {% if i == 0 %}
+             class="collapse show"
+             {% else %}
+             class="collapse"
+             {% endif %}
+             aria-labelledby="heading{{ numbers[i+1] }}" data-parent="#accordionExample">
+            <div class="card-body">
+
+                <p class="text-center">
+                    <iframe src={{"https://open.spotify.com/embed/playlist/" + playlists[i][1]}} class="spot" frameborder="0"
+                            allowtransparency="true" allow="encrypted-media"></iframe>
+                </p>
+
+            </div>
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+<div style="background-image: url(static/imgs/green-blue.jpg);background-repeat: no-repeat; background-size: cover;padding: 0.5cm;">
+
+    <h3 class="text-center text" style="margin-top:1cm;">The most frequent artist of {{ name }} is {{ favoriteArtist["name"] }}</h3>
+    <p class="text-center text">Genre: {{ favoriteArtist["genre"] }}</p>
+    <div style="margin: auto; text-align: center">
+        <img src={{ favoriteArtist["photo"] }} class="foto">
+    </div>
+    <p class="text-center" style="margin-top:1cm;">
+        <iframe src="https://open.spotify.com/embed/album/{{ favoriteArtist["album"] }}" class="muc" frameborder="0"
+                allowtransparency="true" allow="encrypted-media"></iframe>
+    </p>
+</div>
+
+<div style="background-color:white; padding: 1cm;">
+
+    <h3 class="text-center " style="margin-top:1cm;">The main genres of {{ name }}'s playlists are:</h3>
+    <p class="text-center">
+        {% set colors = {0: "primary", 1: "secondary", 2: "success", 3: "danger", 4: "warning"} %}
+        {% for i in range(genres|length) %}
+        <div class="alert alert-{{ colors[i] }} text-center" role="alert">
+            {{ genres[i] }}
+        </div>
+        {% endfor %}
+    </p>
+
+</div>
+
+<div style="background-color:#5bc0de; padding: 0.5cm;">
+    {% if incommon != [] %}
+    <h3 class="text-center text" style="margin-top:1cm;">Some songs that you have in common</h3>
+    <h3 class="text-center text" style="margin-bottom: 1cm;">whith {{ name }} are:</h3>
+    <p class="text-center" style="margin: auto; max-width: 680px;">
+        {% for i in range(incommon|length) %}
+        {% if i != incommon|length - 1 or incommon|length == 2 %}
+        <iframe src="https://open.spotify.com/embed/track/{{ incommon[i] }}" class="muc" frameborder="0"
+                allowtransparency="true" allow="encrypted-media"></iframe>
+        {% endif %}
+        {% endfor %}
+    </p>
+    {% if incommon|length > 0 and incommon|length != 2 %}
+    <div style="text-align: center;">
+        <iframe src="https://open.spotify.com/embed/track/{{ incommon[incommon|length - 1] }}" class="muc" frameborder="0"
+                allowtransparency="true" allow="encrypted-media"></iframe>
+    </div>
+    {% endif %}
+    {% else %}
+    <h3 class="text-center text" style="margin-top:1cm;">Some songs that you have in common</h3>
+    <h3 class="text-center text" style="margin-bottom: 1cm;">whith {{ name }} are:</h3>
+    <h3 class="text-center text" style="margin-top:1cm;">
+        Sorry, we didn't find any in common musics between the user's public playlists
+        and yours.
+    </h3>
+    {% endif %}
+
+    <p style="margin-top:2cm;" class="text-center"><a href="/"><font color="green">Home |</font></a><a href="/profile"><font color="green"> analyze your profile</font></a></p>
+    <p class="text-center" style="padding-top: 2cm; padding-bottom: 2cm; color: white;">
+        Data provided by
+        <a href="http://spotify.com" target="_blank"><b>Spotify</b></a>
+    </p>
+
+</div>
+{% endblock %}

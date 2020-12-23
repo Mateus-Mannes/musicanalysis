@@ -1,0 +1,69 @@
+{% extends "shared/layout.html" %}
+{% block main %}
+
+<body onload="myFunction('{{ status }}')">
+    <div {% if status !="notfound" %}class="con" {% else %}class="con2" {%endif%}>
+
+        <h3 style="color: white" class="text-center">Find out users musical taste based on their public playlists</h3>
+        <form class="form-inline" id="topicForm" action="/look-users" method="POST">
+            <input type="text" id="inputTopic" name="username" class="form-control mb-2 mr-sm-2" placeholder="Username or URL" required autofocus />
+            <button style="margin: auto;" type="submit" id="btn-one" class="btn btn-primary mb-2">
+                Search
+            </button>
+        </form>
+        <p></p>
+        <!-- Button trigger modal -->
+        {% if status != "notfound" %}
+        <p class="text-center">
+            <a data-toggle="modal" data-target="#exampleModal">
+                <font color="#ffffff"><u>how get the url</u></font>
+            </a>
+        </p>
+        {% endif %}
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">how get the url</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        go to the user profile and copy the share link, them paste it in the input bar.
+                        <p class="text-center"><img src="static/imgs/get-url.gif" width="100%" style="max-width: 200px;"></p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        {% if status == "notfound" %}
+
+        <h3 class="text-center" style="color: white">Sorry, we couldn't find that user. Maybe you have written it in a wrong way. Look how to get the user's URL: go to the user profile and copy the share link, them paste it in the input bar.</h3>
+        <p class="text-center"><img src="static/imgs/get-url.gif" width="100%" style="max-width: 200px;"></p>
+        {% endif %}
+    </div>
+</body>
+
+<script>
+    document.querySelector('#btn-one').onclick = function () {
+        var element = document.getElementById("btn-one");
+        if (document.getElementById("inputTopic").value != "") {
+            element.innerHTML = "<div  style='height: 20px; width: 20px' class='spinner-border' role='status'><span class='sr-only'>Loading...</span></div>";
+        }
+    };
+    function myFunction(status) {
+        if (status == "no playlists") {
+            alert("Sorry, this user don't have public playlists to be analyzed");
+        }
+
+    }
+</script>
+
+{% endblock %}

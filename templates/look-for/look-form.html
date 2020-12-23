@@ -1,11 +1,11 @@
-{% extends "layout.html" %}
+{% extends "shared/layout.html" %}
 {% block main %} 
 
 <body onload="myFunction('{{ status }}')">                                                           
   <div {% if status != "notfound" %}class="con"{% else %}class="con2"{%endif%} >
    
     <h3 style="color: white" class="text-center">Find out users musical taste based on their public playlists</h3>
-    <form class="form-inline" id="topicForm" action="/look%20users" method="POST">
+    <form class="form-inline" id="topicForm" action="/look-users" method="POST">
       <input type="text" id="inputTopic" name="username" class="form-control mb-2 mr-sm-2" placeholder="Username or URL" required autofocus/>
       <button style="margin: auto;" type="submit" id="btn-one" class="btn btn-primary mb-2">
         Search
