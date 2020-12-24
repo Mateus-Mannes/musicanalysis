@@ -2,7 +2,7 @@ import spotipy
 import functions as f
 
 
-class Look_For_User():
+class Search():
 
     def __init__(self, user, usuario):
         self.sp = spotipy.Spotify(auth_manager=usuario)

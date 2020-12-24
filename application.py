@@ -3,7 +3,7 @@ from flask import Flask, session, request, redirect, render_template
 from flask_session import Session
 import spotipy
 import uuid
-from main import Look_For_User, Profile, Playlist_Statistics
+from main import Search, Profile, Playlist_Statistics
 from login_requirement import login_required
 from erro_handler import apology
 from functions import check_user
@@ -70,9 +70,9 @@ def profile():
                             playlists = query.get_playlists(),
                             )
     
-@app.route('/look-users', methods=["GET", "POST"])
+@app.route('/search', methods=["GET", "POST"])
 @login_required
-def look_users():
+def search():
     auth_manager = spotipy.oauth2.SpotifyOAuth(cache_path=session_cache_path())
     if request.method == 'POST':
         user = request.form.get('username')
@@ -82,20 +82,20 @@ def look_users():
             temp = user.split("?si=")
             user = temp[0]
         if check_user(user, auth_manager):
-            query = Look_For_User(user, auth_manager)
+            query = Search(user, auth_manager)
 
             if query.get_playlists() == []:
-                return render_template('look-for/look-form.html', status="no playlists")
+                return render_template('search/search.html', status="no playlists")
 
-            return render_template('look-for/look.html', name=query.name,
+            return render_template('search/search.html', name=query.name,
                                                 playlists=query.get_playlists(),
                                                 img=query.img,
                                                 genres=query.get_genres(),
                                                 favoriteArtist = query.get_artist(),
                                                 incommon = query.get_incommon())
         else:
-            return render_template('look-for/look-form.html', status="notfound")
-    return render_template('look-for/look-form.html', status="ok")
+            return render_template('search/search-form.html', status="notfound")
+    return render_template('search/search-form.html', status="ok")
 
 @app.route('/playlist-<variable>', methods=["GET"])
 @login_required
