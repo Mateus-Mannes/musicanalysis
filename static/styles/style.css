@@ -1,0 +1,63 @@
+.con {
+    width: 100vw;
+    height: 100vh;
+    background: #6C7A89;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0.5cm
+}
+
+.con2 {
+    padding-top: 2cm;
+    padding-left: 0.5cm;
+    padding-right: 0.5cm;
+    padding-bottom: 0.5cm;
+    display: flex;
+    flex-direction: column;
+    padding-top: 2cm;
+    background: #6C7A89;
+    justify-content: center;
+    align-items: center
+}
+
+.text {
+    color: white;
+}
+
+.pad {
+    padding-left: 1cm;
+    padding-right: 1cm;
+}
+
+.tracks {
+    padding-left: 1cm;
+    padding-right: 1cm;
+}
+
+@media only screen and (max-width: 1030px) {
+    .tracks {
+        padding-left: 0cm;
+        padding-right: 0cm;
+    }
+}
+
+.user-img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.muc {
+    width: 300px;
+    height: 80px;
+}
+
+@media only screen and (max-width: 350px) {
+    .muc {
+        width: 280px;
+        height: 80px;
+    }
+}

@@ -61,10 +61,7 @@ def login():
 def profile():
     auth_manager = spotipy.oauth2.SpotifyOAuth(cache_path=session_cache_path())
     profile = Profile(auth_manager)
-    return render_template('profile/profile.html', 
-                            profile=profile,
-                            genre=profile.GetTopGenre()
-                            )
+    return render_template('profile/profile.html', profile=profile,genre=profile.GetTopGenre())
     
 @app.route('/search', methods=["GET", "POST"])
 @login_required

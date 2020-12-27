@@ -1,90 +1,72 @@
 {% extends "shared/layout.html" %}
 {% block main %}
 
-<style>
-    .text {
-        color: white;
-    }
-
-    .pad {
-        padding-left: 1cm;
-        padding-right: 1cm;
-    }
-
-    .tracks {
-        padding-left: 1cm;
-        padding-right: 1cm;
-    }
-
-    @media only screen and (max-width: 1030px) {
-        .tracks {
-            padding-left: 0cm;
-            padding-right: 0cm;
-        }
-    }
-
-    .myimg {
-        width: 100px;
-        height: 100px;
-        object-fit: cover;
-        border-radius: 50%;
-    }
-
-    .muc {
-        width: 300px;
-        height: 80px;
-    }
-
-    @media only screen and (max-width: 350px) {
-        .muc {
-            width: 280px;
-            height: 80px;
-        }
-    }
-</style>
-
-<div style="background-color:#2C2E33; padding: 0.5cm;">
-    <p style="margin-top:2cm"></p>
-    <div style="text-align: center;margin: auto;">
-        <img src={{ profile.Img }} class="myimg">
+<div class="bg-dark p-5">
+    <div class="mt-2 d-flex justify-content-center">
+        <img src={{ profile.Img }} class="user-img">
     </div>
-    <h3 class="text-center text pad" id="hello">
+    <h3 class="text-white text-center" id="hello">
         Good Morning {% if profile.User["display_name"] != "" %} {{  profile.User["display_name"] }} {% set name = profile.User["display_name"] %} {% else %} {{  profile.User["id"] }} {% set name = profile.User["id"] %} {%endif%} !
     </h3>
-
-    <p class="text-center" style="margin: auto; max-width: 1000px;">
+    <script>
+        now = new Date
+        if (now.getHours() >= 0 && now.getHours() < 5) {
+            var element = document.getElementById("hello");
+            element.innerHTML = "Good Night {{name}} !";
+        }
+        else if (now.getHours() >= 5 && now.getHours() < 12) {
+            var element = document.getElementById("hello");
+            element.innerHTML = "Good morning {{name}} !";
+        }
+        else if (now.getHours() >= 12 && now.getHours() < 18) {
+            var element = document.getElementById("hello");
+            element.innerHTML = "Good Evening {{name}} !";
+        }
+        else {
+            var element = document.getElementById("hello");
+            element.innerHTML = "Good Night {{name}} !";
+        }
+    </script>
+    <p class="text-center">
         {% for playlist in profile.Playlists["items"] %}
-        <iframe src="https://open.spotify.com/embed/playlist/{{ playlist["id"] }}" class="muc" frameborder="0"
-                allowtransparency="true" allow="encrypted-media"></iframe>
+        <iframe src="https://open.spotify.com/embed/playlist/{{ playlist["id"] }}" width="300" height="80" frameborder="0"
+                allowtransparency="false" allow="encrypted-media"></iframe>
         {% endfor %}
     </p>
-    <div class="dropdown" style="text-align: center; margin: auto;">
+    <div class="dropdown d-flex justify-content-center">
         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Choose a playlist to analyze
         </button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
             {% for i in range(profile.Playlists["items"]|length) %}
-            <a id="link{{ i }}" class="dropdown-item" href="playlist-{{ profile.Playlists["items"][i]["id"] }}"> 
-            {% if profile.Playlists["items"][i]["name"]|length > 23 %} 
+            <a id="link{{ i }}" class="dropdown-item" href="playlist-{{ profile.Playlists["items"][i]["id"] }}">
+                {% if profile.Playlists["items"][i]["name"]|length > 23 %}
                 {{ profile.Playlists["items"][i]["name"][0:20] }}...
-            {% else %}
-                 {{ profile.Playlists["items"][i]["name"] }}
-            {% endif %}
+                {% else %}
+                {{ profile.Playlists["items"][i]["name"] }}
+                {% endif %}
             </a>
             {% endfor %}
         </div>
     </div>
+    <script language=javascript type="text/javascript">
+        {% for i in range(profile.Playlists["items"]|length) %}
+        document.querySelector('#link{{ i }}').onclick = function() {
+        var element = document.getElementById("dropdownMenuButton");
+        element.innerHTML = "<span>Loading...  </span><div  style='height: 20px; width: 20px' class='spinner-border' role='status'></div>";
+        };
+        {% endfor %}
+    </script>
 </div>
 
-<div class="tracks" style="padding-top: 1cm; padding-bottom: 1cm; background-image: url(static/images/green-blue.jpg);background-repeat: no-repeat; background-size: cover;">
-    <h3 class="text-center text pad">Main favorite genre: {{ genre }} &#9835;</h3>
-    <h3 class="text-center text pad">Top Artists:</h3>
+<div class="py-5" style="background-image: url(static/images/green-blue.jpg);background-repeat: no-repeat;background-size: cover;">
+    <h3 class="text-white text-center">Main favorite genre: {{ genre }} &#9835;</h3>
+    <h3 class="text-white text-center">Top Artists:</h3>
     <div style="margin: auto; text-align: center; ">
-        <div div class="card-group tracks">
+        <div class="card-group px-1">
             {% for i in range(profile.TopArtists["items"]|length) if i < 5 %}
-   
             <div class="card" style="background:none;border: none">
-                <img style="text-align: center; margin: auto;" src={{profile.TopArtists["items"][i]["images"][0]["url"]}} class="myimg">
+                <img src={{profile.TopArtists["items"][i]["images"][0]["url"]}} style="margin: auto; text-align: center;" class="user-img">
                 <font color="white">{{ profile.TopArtists["items"][i]["name"] }}</font>
             </div>
             {% endfor %}
@@ -92,51 +74,17 @@
     </div>
 </div>
 
-<div class="tracks" style=" padding-top: 1cm; padding-bottom: 1cm;background-color:#2C2E33">
-    <h3 class="text-center text pad" id="hello">Your Top Tracks:</h3>
-    <p class="text-center">
+<div class="bg-dark p-5">
+    <h3 class="text-center text-white" id="hello">Your Top Tracks:</h3>
+    <p class="text-center text-white">
         {% for i in range(profile.TopTracks["items"]|length) if i < 5 %}
-
         <iframe src="https://open.spotify.com/embed/track/{{ profile.TopTracks["items"][i]["id"] }}" width="300px" height="380px" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
         {% endfor %}
     </p>
-
-    <p style="margin-top:2cm;" class="text-center"><a href="/"><font color="green">Home |</font></a><a href="/search"><font color="green"> analyze others users profiles</font></a></p>
-    <p class="text-center" style="padding-top: 2cm; padding-bottom: 2cm; color: black;">
+    <p class="text-center pt-5"><a class="text-info" href="/">Home |</a><a class="text-info" href="/search"> analyze others users profiles</a></p>
+    <p class="text-center p-2">
         Data provided by
         <a href="http://spotify.com" target="_blank"><b>Spotify</b></a>
     </p>
 </div>
-
-<script language=javascript type="text/javascript">
-    now = new Date
-    if (now.getHours () >= 0 && now.getHours () < 5)
-    {
-        var element = document.getElementById("hello");
-        element.innerHTML = "Good Night {{name}} !";
-    }
-            else if (now.getHours () >= 5 && now.getHours () < 12)
-    {
-        var element = document.getElementById("hello");
-        element.innerHTML = "Good morning {{name}} !";
-    }
-            else if (now.getHours () >= 12 && now.getHours () < 18)
-    {
-        var element = document.getElementById("hello");
-        element.innerHTML = "Good Evening {{name}} !";
-    }
-    else
-    {
-        var element = document.getElementById("hello");
-        element.innerHTML = "Good Night {{name}} !";
-    }
-    {% for i in range(profile.Playlists["items"]|length) %}
-    document.querySelector('#link{{ i }}').onclick = function() {
-    var element = document.getElementById("dropdownMenuButton");
-    element.innerHTML = "<span>Loading...  </span><div  style='height: 20px; width: 20px' class='spinner-border' role='status'></div>";
-    };
-    {% endfor %}
-</script>
-
-
 {% endblock %}
