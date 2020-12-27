@@ -58,7 +58,7 @@ class Profile():
         try:
             self.img = self.user["images"][0]["url"]
         except:
-            self.img = "static/imgs/user.png"
+            self.img = "templates/images/user.png"
         self.playlists = self.spotify.current_user_playlists()
         self.top_tracks = self.spotify.current_user_top_tracks()
 
