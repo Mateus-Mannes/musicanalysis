@@ -3,7 +3,8 @@ from flask import Flask, session, request, redirect, render_template
 from flask_session import Session
 import spotipy
 import uuid
-from main import Search, Profile, Playlist_Statistics
+from main import Search, Playlist_Statistics
+from models.Profile import Profile
 from login_requirement import login_required
 from erro_handler import apology
 from functions import check_user
@@ -60,9 +61,9 @@ def login():
 def profile():
     auth_manager = spotipy.oauth2.SpotifyOAuth(cache_path=session_cache_path())
     profile = Profile(auth_manager)
-    return render_template('teste.html', 
+    return render_template('profile/profile.html', 
                             profile=profile,
-                            genre=profile.get_top_genre()
+                            genre=profile.GetTopGenre()
                             )
     
 @app.route('/search', methods=["GET", "POST"])

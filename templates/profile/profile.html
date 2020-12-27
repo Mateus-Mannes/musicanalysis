@@ -46,13 +46,15 @@
 <div style="background-color:#2C2E33; padding: 0.5cm;">
     <p style="margin-top:2cm"></p>
     <div style="text-align: center;margin: auto;">
-        <img src={{ img }} class="myimg">
+        <img src={{ profile.Img }} class="myimg">
     </div>
-    <h3 class="text-center text pad" id="hello">Good Morning {{name}} !</h3>
+    <h3 class="text-center text pad" id="hello">
+        Good Morning {% if profile.User["display_name"] != "" %} {{  profile.User["display_name"] }} {% set name = profile.User["display_name"] %} {% else %} {{  profile.User["id"] }} {% set name = profile.User["id"] %} {%endif%} !
+    </h3>
 
     <p class="text-center" style="margin: auto; max-width: 1000px;">
-        {% for i in range(playlists|length) %}
-        <iframe src="https://open.spotify.com/embed/playlist/{{ playlists[i][1] }}" class="muc" frameborder="0"
+        {% for playlist in profile.Playlists["items"] %}
+        <iframe src="https://open.spotify.com/embed/playlist/{{ playlist["id"] }}" class="muc" frameborder="0"
                 allowtransparency="true" allow="encrypted-media"></iframe>
         {% endfor %}
     </p>
@@ -61,22 +63,29 @@
             Choose a playlist to analyze
         </button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            {% for i in range(playlists|length) %}
-            <a id="link{{ i }}" class="dropdown-item" href="playlist-{{ playlists[i][1] }}"> {{playlists[i][0]}} </a>
+            {% for i in range(profile.Playlists["items"]|length) %}
+            <a id="link{{ i }}" class="dropdown-item" href="playlist-{{ profile.Playlists["items"][i]["id"] }}"> 
+            {% if profile.Playlists["items"][i]["name"]|length > 23 %} 
+                {{ profile.Playlists["items"][i]["name"][0:20] }}...
+            {% else %}
+                 {{ profile.Playlists["items"][i]["name"] }}
+            {% endif %}
+            </a>
             {% endfor %}
         </div>
     </div>
 </div>
 
-<div class="tracks" style="padding-top: 1cm; padding-bottom: 1cm; background-image: url(templates/images/green-blue.jpg);background-repeat: no-repeat; background-size: cover;">
+<div class="tracks" style="padding-top: 1cm; padding-bottom: 1cm; background-image: url(static/images/green-blue.jpg);background-repeat: no-repeat; background-size: cover;">
     <h3 class="text-center text pad">Main favorite genre: {{ genre }} &#9835;</h3>
     <h3 class="text-center text pad">Top Artists:</h3>
     <div style="margin: auto; text-align: center; ">
         <div div class="card-group tracks">
-            {% for artist in artists %}
+            {% for i in range(profile.TopArtists["items"]|length) if i < 5 %}
+   
             <div class="card" style="background:none;border: none">
-                <img style="text-align: center; margin: auto;" src={{artist[2]}} class="myimg">
-                <font color="white">{{ artist[0] }}</font>
+                <img style="text-align: center; margin: auto;" src={{profile.TopArtists["items"][i]["images"][0]["url"]}} class="myimg">
+                <font color="white">{{ profile.TopArtists["items"][i]["name"] }}</font>
             </div>
             {% endfor %}
         </div>
@@ -86,8 +95,9 @@
 <div class="tracks" style=" padding-top: 1cm; padding-bottom: 1cm;background-color:#2C2E33">
     <h3 class="text-center text pad" id="hello">Your Top Tracks:</h3>
     <p class="text-center">
-        {% for i in range(tracks_length) %}
-        <iframe src="https://open.spotify.com/embed/track/{{ tracks[i][1] }}" width="300px" height="380px" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+        {% for i in range(profile.TopTracks["items"]|length) if i < 5 %}
+
+        <iframe src="https://open.spotify.com/embed/track/{{ profile.TopTracks["items"][i]["id"] }}" width="300px" height="380px" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
         {% endfor %}
     </p>
 
@@ -120,7 +130,7 @@
         var element = document.getElementById("hello");
         element.innerHTML = "Good Night {{name}} !";
     }
-    {% for i in range(playlists|length) %}
+    {% for i in range(profile.Playlists["items"]|length) %}
     document.querySelector('#link{{ i }}').onclick = function() {
     var element = document.getElementById("dropdownMenuButton");
     element.innerHTML = "<span>Loading...  </span><div  style='height: 20px; width: 20px' class='spinner-border' role='status'></div>";
