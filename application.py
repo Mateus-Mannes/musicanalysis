@@ -59,15 +59,10 @@ def login():
 @login_required
 def profile():
     auth_manager = spotipy.oauth2.SpotifyOAuth(cache_path=session_cache_path())
-    query = Profile(auth_manager)
-    return render_template('profile/profile.html', 
-                            name=query.name,
-                            img=query.img,
-                            tracks = query.get_toptracks(),
-                            tracks_length = len(query.get_toptracks()),
-                            genre =query.get_topgenre(),
-                            artists = query.get_topartists(),
-                            playlists = query.get_playlists(),
+    profile = Profile(auth_manager)
+    return render_template('teste.html', 
+                            profile=profile,
+                            genre=profile.get_top_genre()
                             )
     
 @app.route('/search', methods=["GET", "POST"])

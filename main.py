@@ -1,5 +1,7 @@
 import spotipy
 import functions as f
+from collections import Counter
+import pandas as pd
 
 
 class Search():
@@ -49,28 +51,25 @@ class Search():
 
 class Profile():
 
-    def __init__(self, usuario):
-        self.auth = usuario
-        self.sp = spotipy.Spotify(auth_manager=usuario)
-        self.top = self.sp.current_user_top_artists()
-        self.user = self.sp.me()
-        self.img = f.get_image(self.user)
-        self.name = f.get_current_name(self.user)
+    def __init__(self, auth_manager):
+        self.spotify = spotipy.Spotify(auth_manager=auth_manager)
+        self.top_artists = self.spotify.current_user_top_artists()
+        self.user = self.spotify.me()
+        try:
+            self.img = self.user["images"][0]["url"]
+        except:
+            self.img = "static/imgs/user.png"
+        self.playlists = self.spotify.current_user_playlists()
+        self.top_tracks = self.spotify.current_user_top_tracks()
 
-    def get_topartists(self):
-        return f.get_topfive_artists(self.top)
-
-    def get_playlists(self):
-        playlistdata = self.sp.current_user_playlists()
-        return f.get_playlistsnames(playlistdata)
-
-    def get_topgenre(self):
-        allgenres = f.get_allgenres(self.top)
-        return f.get_mode(allgenres)
-
-    def get_toptracks(self):
-        toptracks = self.sp.current_user_top_tracks()
-        return f.get_topfive_tracks(toptracks)
+    def get_top_genre(self):
+        genres = []
+        for i in range(len(self.top_artists["items"])):
+            for genre in self.top_artists["items"][i]["genres"]:
+                genres.append(genre)
+        counter = Counter(genres)
+        mode = counter.most_common(1)[0][0]
+        return mode
 
 class Playlist_Statistics():
 
