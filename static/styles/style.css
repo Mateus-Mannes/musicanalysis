@@ -22,42 +22,9 @@
     align-items: center
 }
 
-.text {
-    color: white;
-}
-
-.pad {
-    padding-left: 1cm;
-    padding-right: 1cm;
-}
-
-.tracks {
-    padding-left: 1cm;
-    padding-right: 1cm;
-}
-
-@media only screen and (max-width: 1030px) {
-    .tracks {
-        padding-left: 0cm;
-        padding-right: 0cm;
-    }
-}
-
 .user-img {
     width: 100px;
     height: 100px;
     object-fit: cover;
     border-radius: 50%;
-}
-
-.muc {
-    width: 300px;
-    height: 80px;
-}
-
-@media only screen and (max-width: 350px) {
-    .muc {
-        width: 280px;
-        height: 80px;
-    }
 }

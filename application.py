@@ -34,7 +34,7 @@ def index():
         for track in data[country]:
             for genre in data[country][track]["Genres"]:
                 genres.add(genre)
-    return render_template('index/index.html', top_tracks_data=data, genres = genres)
+    return render_template('index/index.html', top_tracks_data=data, genres=genres)
 
 @app.route('/logout', methods=['GET'])
 def logout():
