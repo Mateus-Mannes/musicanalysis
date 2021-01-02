@@ -1,6 +1,5 @@
 {% extends "shared/layout.html" %}
 {% block main %}
-
 <div class="bg-dark p-5">
     <div class="mt-2 d-flex justify-content-center">
         <img src={{ profile.Img }} class="user-img">
@@ -9,23 +8,23 @@
         Good Morning {% if profile.User["display_name"] != "" %} {{  profile.User["display_name"] }} {% set name = profile.User["display_name"] %} {% else %} {{  profile.User["id"] }} {% set name = profile.User["id"] %} {%endif%} !
     </h3>
     <script>
-        now = new Date
-        if (now.getHours() >= 0 && now.getHours() < 5) {
-            var element = document.getElementById("hello");
-            element.innerHTML = "Good Night {{name}} !";
-        }
-        else if (now.getHours() >= 5 && now.getHours() < 12) {
-            var element = document.getElementById("hello");
-            element.innerHTML = "Good morning {{name}} !";
-        }
-        else if (now.getHours() >= 12 && now.getHours() < 18) {
-            var element = document.getElementById("hello");
-            element.innerHTML = "Good Evening {{name}} !";
-        }
-        else {
-            var element = document.getElementById("hello");
-            element.innerHTML = "Good Night {{name}} !";
-        }
+      now = new Date
+      if (now.getHours() >= 0 && now.getHours() < 5) {
+          var element = document.getElementById("hello");
+          element.innerHTML = "Good Night {{name}} !";
+      }
+      else if (now.getHours() >= 5 && now.getHours() < 12) {
+          var element = document.getElementById("hello");
+          element.innerHTML = "Good morning {{name}} !";
+      }
+      else if (now.getHours() >= 12 && now.getHours() < 18) {
+          var element = document.getElementById("hello");
+          element.innerHTML = "Good Evening {{name}} !";
+      }
+      else {
+          var element = document.getElementById("hello");
+          element.innerHTML = "Good Night {{name}} !";
+      }
     </script>
     <p class="text-center">
         {% for playlist in profile.Playlists["items"] %}
@@ -50,15 +49,14 @@
         </div>
     </div>
     <script language=javascript type="text/javascript">
-        {% for i in range(profile.Playlists["items"]|length) %}
-        document.querySelector('#link{{ i }}').onclick = function() {
-        var element = document.getElementById("dropdownMenuButton");
-        element.innerHTML = "<span>Loading...  </span><div  style='height: 20px; width: 20px' class='spinner-border' role='status'></div>";
-        };
-        {% endfor %}
+      {% for i in range(profile.Playlists["items"]|length) %}
+      document.querySelector('#link{{ i }}').onclick = function() {
+      var element = document.getElementById("dropdownMenuButton");
+      element.innerHTML = "<span>Loading...  </span><div  style='height: 20px; width: 20px' class='spinner-border' role='status'></div>";
+      };
+      {% endfor %}
     </script>
 </div>
-
 <div class="py-5" style="background-image: url(static/images/green-blue.jpg);background-repeat: no-repeat;background-size: cover;">
     <h3 class="text-white text-center">Main favorite genre: {{ genre }} &#9835;</h3>
     <h3 class="text-white text-center">Top Artists:</h3>
@@ -73,7 +71,6 @@
         </div>
     </div>
 </div>
-
 <div class="bg-dark p-5">
     <h3 class="text-center text-white" id="hello">Your Top Tracks:</h3>
     <p class="text-center text-white">
