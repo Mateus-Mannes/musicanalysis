@@ -196,12 +196,10 @@ def get_dataframe(playlistdata, audio_features):
 
 
 def maximum(df, column):
-    maximum = [(df['name'][df[column] == df[column].max()].values[0]),
-               (df.index[df[column] == df[column].max()].tolist()[0])]
+    maximum = [(df['name'][df[column] == df[column].max()].values[0]), (df.index[df[column] == df[column].max()].tolist()[0])]
     return maximum
 
 
 def minimum(df, column):
-    minimum = [(df['name'][df[column] == df[column].min()].values[0]),
-               (df.index[df[column] == df[column].min()].tolist()[0])]
+    minimum = [(df['name'][df[column] == df[column].min()].values[0]),(df.index[df[column] == df[column].min()].tolist()[0])]
     return minimum
