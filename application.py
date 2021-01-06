@@ -3,13 +3,14 @@ from flask import Flask, session, request, redirect, render_template
 from flask_session import Session
 import spotipy
 import uuid
+from werkzeug.exceptions import default_exceptions, HTTPException, InternalServerError
+import requests, json
 from main import Search, Playlist_Statistics
 from models.Profile import Profile
+from models.Playlist import Playlist
 from login_requirement import login_required
 from erro_handler import apology
 from functions import check_user
-from werkzeug.exceptions import default_exceptions, HTTPException, InternalServerError
-import requests, json
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.urandom(64)
@@ -78,10 +79,8 @@ def profile():
 def playlist(id):
     playlist_id = id
     auth_manager = spotipy.oauth2.SpotifyOAuth(cache_path=session_cache_path())
-    playlist_statistics = Playlist_Statistics(playlist_id, auth_manager)
-    musics_features = playlist_statistics.get_mfeatures()
-    average_features = playlist_statistics.get_avgfeatures()
-    return render_template('playlist/playlist.html', avg = average_features, msc = musics_features)
+    playlist = Playlist(playlist_id, auth_manager)
+    return render_template('playlist/playlist.html', averages=playlist.GetAverages(), features=playlist.GetFeatures())
 
 @app.route('/search', methods=["GET", "POST"])
 @login_required

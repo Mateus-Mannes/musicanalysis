@@ -53,7 +53,7 @@
   document.querySelector('#btn-one').onclick = function() {
     var element = document.getElementById("btn-one");
     if(document.getElementById("inputTopic").value != "") {
-      element.innerHTML = "<div  style='height: 20px; width: 20px' class='spinner-border' role='status'><span class='sr-only'>Loading...</span></div>";
+        element.innerHTML = "<span>Loading...  </span><div  style='height: 20px; width: 20px' class='spinner-border' role='status'></div>";
     }
     };
     function myFunction(status) {
