@@ -5,12 +5,12 @@ import spotipy
 import uuid
 from werkzeug.exceptions import default_exceptions, HTTPException, InternalServerError
 import requests, json
-from main import Search, Playlist_Statistics
 from models.Profile import Profile
 from models.Playlist import Playlist
+from models.Search import Search
 from login_requirement import login_required
 from erro_handler import apology
-from functions import check_user
+from check_user import check_user
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.urandom(64)
@@ -87,14 +87,14 @@ def playlist(id):
 def search():
     auth_manager = spotipy.oauth2.SpotifyOAuth(cache_path=session_cache_path())
     if request.method == 'POST':
-        user = request.form.get('username')
-        if "https://open.spotify.com/user/" in user:
-            user = user.replace("https://open.spotify.com/user/", "")
-        if "?si=" in user:
-            temp = user.split("?si=")
-            user = temp[0]
-        if check_user(user, auth_manager):
-            query = Search(user, auth_manager)
+        id = request.form.get('username')
+        if "https://open.spotify.com/user/" in id:
+            id = id.replace("https://open.spotify.com/user/", "")
+        if "?si=" in id:
+            temp = id.split("?si=")
+            id = temp[0]
+        if check_user(id, auth_manager):
+            search = Search(id, auth_manager)
 
             if query.get_playlists() == []:
                 return render_template('search/search.html', status="no playlists")
