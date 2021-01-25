@@ -23,7 +23,7 @@ class Search():
         for playlist in self.CurrentUserPlaylists["items"]:
             self.CurrentUserPlaylistsTracks.append(self.Spotify.playlist_tracks(playlist["id"]))
 
-    def GetTopGenres(self):
+    def GetTopGenre(self):
         topGenres = []
         for playlistTracks in self.PlaylistsTracks:
             artistsCounter = 0
@@ -63,7 +63,19 @@ class Search():
         album = self.Spotify.artist_albums(topArtist)["items"][0]["id"]
         return {"artist": artistData, "genre": genre, "album": album}
 
-    def get_incommon(self):
-        usermusics = f.get_musics(self.playlistdata)
-        mymusics = f.get_musics(self.myplaylistdata)
-        return f.get_incommonmusics(usermusics, mymusics)
+    def GetIncommonTracks(self):
+        tracksIds = []
+        for playlist in self.PlaylistsTracks:
+            for track in playlist["items"]:
+                ids.append(track["track"]["id"])
+        currentUserTracksIds = []
+        for playlist in self.CurrentUserPlaylistsTracks:
+            for track in playlist["items"]:
+                ids.append(track["track"]["id"])
+        inCommon = []
+        for trackId in tracksIds:
+            if trackId in currentUserTracksIds:
+                inCommon.append(trackId)
+            if len(inCommon) >= 5:
+                break
+        return inCommon

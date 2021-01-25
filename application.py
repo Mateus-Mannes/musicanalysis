@@ -95,16 +95,11 @@ def search():
             id = temp[0]
         if check_user(id, auth_manager):
             search = Search(id, auth_manager)
-
-            if query.get_playlists() == []:
-                return render_template('search/search.html', status="no playlists")
-
-            return render_template('search/search.html', name=query.name,
-                                                playlists=query.get_playlists(),
-                                                img=query.img,
-                                                genres=query.get_genres(),
-                                                favoriteArtist = query.get_artist(),
-                                                incommon = query.get_incommon())
+            if search.Playlists == []:
+                return render_template('search/search.html', status="noplaylists")
+            return render_template('search/search.html', search=search, genre = search.GetTopGenre,
+                                  artists = search.GetTopArtists, 
+                                   common = search.GetIncommonTracks)
         else:
             return render_template('search/search-form.html', status="notfound")
     return render_template('search/search-form.html', status="ok")
