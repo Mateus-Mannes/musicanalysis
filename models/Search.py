@@ -23,7 +23,7 @@ class Search():
         for playlist in self.CurrentUserPlaylists["items"]:
             self.CurrentUserPlaylistsTracks.append(self.Spotify.playlist_tracks(playlist["id"]))
 
-    def GetTopGenre(self):
+    def GetTopGenres(self):
         topGenres = []
         for playlistTracks in self.PlaylistsTracks:
             artistsCounter = 0
@@ -32,7 +32,7 @@ class Search():
                 if artistsCounter == 10:
                     break
                 if playlistTracks["items"][i]["track"]["artists"][0]["id"] not in artists:
-                    artists.append(playlist["items"][i]["track"]["artists"][0]["id"])
+                    artists.append(playlistTracks["items"][i]["track"]["artists"][0]["id"])
                     artistsCounter += 1
             artistFullData = self.Spotify.artists(artists)
             genres = []
@@ -45,7 +45,7 @@ class Search():
                 topGenres.append(mode)
         return topGenres
 
-    def GetTopArtists(self):
+    def GetTopArtist(self):
         artists = []
         for playlistTracks in self.PlaylistsTracks:
             for track in playlistTracks["items"]:
@@ -67,11 +67,17 @@ class Search():
         tracksIds = []
         for playlist in self.PlaylistsTracks:
             for track in playlist["items"]:
-                ids.append(track["track"]["id"])
+                try:
+                    tracksIds.append(track['track']['id'])
+                except:
+                    continue
         currentUserTracksIds = []
         for playlist in self.CurrentUserPlaylistsTracks:
-            for track in playlist["items"]:
-                ids.append(track["track"]["id"])
+            for i in range(len(playlist["items"])):
+                try:
+                    currentUserTracksIds.append(playlist["items"][i]["track"]["id"])
+                except:
+                    continue
         inCommon = []
         for trackId in tracksIds:
             if trackId in currentUserTracksIds:
