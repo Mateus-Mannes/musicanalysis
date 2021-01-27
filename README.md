@@ -16,7 +16,7 @@ Search users profiles: search page, there you can search for another spotify use
 
 
 # Code
-The struct of the project is like a MVC, with application.py as the controler, the classes from each route at models folder and the views at the templates folder. The images and some css classes are at the static folder and the JS code used is inside the views at the HTML files. The data from the index page map is been getting from https://github.com/Mateus-Mannes/top-country-tracks-api
+The struct of the project is like a MVC, with application.py as the controler, the classes from each route at models folder and the views at the templates folder. The images and some css classes are at the static folder and the JS code used is inside the views at the HTML files. In addition some auxiliary functions are divided into files in the project folder. The data from the index page map is been getting from https://github.com/Mateus-Mannes/top-country-tracks-api
 
 
 # How to run
