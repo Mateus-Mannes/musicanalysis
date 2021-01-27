@@ -1,6 +1,7 @@
 # Byte-compiled / optimized / DLL files
 spotify_caches/
 __pycache__/
+.vs/
 *.py[cod]
 *$py.class
 

@@ -12,7 +12,7 @@ Home: index page, with a graphic map of the popularity of a genre
 
 Profile: profile page, shows data about the user playlist, top genre, top artists and top tracks. In this page there is also an option to choose one playlist to analyze, that redirects to an other page with data about tracks and features
 
-Look users: search page, there you can search for another spotify user, by the user id or the share URL, and if the user exists and has public playlists, you will be redirected to a page with analysis about their tracks.
+Search users profiles: search page, there you can search for another spotify user, by the user id or the share URL, and if the user exists and has public playlists, you will be redirected to a page with analysis about their tracks.
 
 
 # Code

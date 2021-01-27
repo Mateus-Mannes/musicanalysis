@@ -5,6 +5,6 @@ def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
         if session.get("uuid") is None:
-            return render_template('login.html')
+            return render_template('shared/login.html')
         return f(*args, **kwargs)
     return decorated_function

@@ -1,0 +1,78 @@
+{% extends "shared/layout.html" %}
+{% block main %}
+<div class="bg-dark pb-5" style="padding-left: 10%;padding-right: 10%;">
+    <h3 class="text-white text-center" style="padding-top: 2cm">Statistics:</h3>
+    <font color="white">Danceability</font>
+    <div class="progress ">
+        <div class="progress-bar" role="progressbar" style="width: {{ averages["danceability"]  }}%; background-color: #47FF6D;" aria-valuenow="{{  averages["danceability"] }}" aria-valuemin="0" aria-valuemax="100">
+            {{ averages["danceability"] }}%
+        </div>
+    </div>
+    <p></p>
+    <font color="white">Energy</font>
+    <div class="progress ">
+        <div class="progress-bar" role="progressbar" style="width: {{averages["energy"] }}%; background-color: #E6DD45;" aria-valuenow="{{ averages["energy"] }}" aria-valuemin="0" aria-valuemax="100">
+            {{ averages["energy"] }}%
+        </div>
+    </div>
+    <p></p>
+    <font color="white">Acousticness</font>
+    <div class="progress ">
+        <div class="progress-bar" role="progressbar" style="width: {{ averages["acousticness"] }}%; background-color: #FCAD58;" aria-valuenow="{{ averages["acousticness"] }}" aria-valuemin="0" aria-valuemax="100">
+            {{ averages["acousticness"] }}%
+        </div>
+    </div>
+    <p></p>
+    <font color="white">Instrumentalness</font>
+    <div class="progress ">
+        <div class="progress-bar" role="progressbar" style="width: {{ averages["instrumentalness"] }}%; background-color: #E64570;" aria-valuenow="{{ averages["instrumentalness"]}}" aria-valuemin="0" aria-valuemax="100">
+            {{ averages["instrumentalness"]  }}%
+        </div>
+    </div>
+    <p></p>
+    <font color="white">Valence</font>
+    <div class="progress ">
+        <div class="progress-bar" role="progressbar" style="width: {{ averages["valence"]  }}%; background-color: #7F4CFE;" aria-valuenow="{{ averages["valence"]}}" aria-valuemin="0" aria-valuemax="100">
+            {{ averages["valence"] }}%
+        </div>
+    </div>
+</div>
+<div class="py-5" style="background-color: #2C2E33">
+    <h3 class="text-center text-white">Tracks features:</h3>
+    <div style="margin: auto; text-align: center;">
+        <div div class="card-group">
+            <div class="card" style="background-color:#2C2E33;border-color: #2C2E33;">
+                <font color="white">Most Popular</font>
+                <iframe style=" text-align: center; margin: auto" src="https://open.spotify.com/embed/track/{{ features["mostpopular"] }}" width="250" height="330" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+            </div>
+            <div class="card" style="background-color:#2C2E33;border-color: #2C2E33;">
+                <font color="white">Longest</font>
+                <iframe style=" text-align: center; margin: auto" src="https://open.spotify.com/embed/track/{{ features["longest"] }}" width="250" height="330" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+            </div>
+            <div class="card" style="background-color:#2C2E33;border-color: #2C2E33;">
+                <font color="white">Happiest</font>
+                <iframe style=" text-align: center; margin: auto" src="https://open.spotify.com/embed/track/{{ features["happiest"] }}" width="250" height="330" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+            </div>
+        </div>
+        <div div class="card-group">
+            <div class="card" style="background-color:#2C2E33;border-color: #2C2E33;">
+                <font color="white">Less Popular</font>
+                <iframe style=" text-align: center; margin: auto" src="https://open.spotify.com/embed/track/{{ features["lesspopular"] }}" width="250" height="330" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+            </div>
+            <div class="card" style="background-color:#2C2E33;border-color: #2C2E33;">
+                <font color="white">Shortest</font>
+                <iframe style=" text-align: center; margin: auto" src="https://open.spotify.com/embed/track/{{ features["shortest"] }}" width="250" height="330" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+            </div>
+            <div class="card" style="background-color:#2C2E33;border-color: #2C2E33;">
+                <font color="white">Saddest</font>
+                <iframe style=" text-align: center; margin: auto" src="https://open.spotify.com/embed/track/{{ features["saddest"] }}" width="250" height="330" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+            </div>
+        </div>
+    </div>
+    <p class="text-center pt-5"><a class="text-info" href="/">Home |</a><a class="text-info" href="/search"> analyze others users profiles |</a><a class="text-info" href="/profile"> analyze your profile</a></p>
+    <p class="text-center p-2 text-white">
+        Data provided by
+        <a href="http://spotify.com" target="_blank"><b>Spotify</b></a>
+    </p>
+</div>
+{% endblock %}
