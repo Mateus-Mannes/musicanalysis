@@ -95,8 +95,8 @@ def search():
             id = temp[0]
         if check_user(id, auth_manager):
             search = Search(id, auth_manager)
-            if search.Playlists == []:
-                return render_template('search/search.html', status="noplaylists")
+            if search.Playlists["items"] == []:
+                return render_template('search/search-form.html', status="noplaylists")
             return render_template('search/search.html', search=search, genres = search.GetTopGenres(),
                                   artist = search.GetTopArtist(), 
                                    incommon = search.GetIncommonTracks())
