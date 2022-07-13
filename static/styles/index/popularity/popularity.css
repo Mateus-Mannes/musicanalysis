@@ -1,0 +1,12 @@
+.popularity{
+    margin: 2.5rem auto 2.5rem auto;
+}
+
+@media screen and (min-width: 600px)
+{
+    .popularity{
+        display: flex;
+        height: 85vh;
+        margin: 1rem auto 1rem auto;
+    }
+}
