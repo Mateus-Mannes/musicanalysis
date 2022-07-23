@@ -1,0 +1,35 @@
+.about{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100vh;
+    background: #6C7A89;
+    color: white;
+    text-align: center;
+}
+
+.about__git{
+    display: flex;
+    justify-content: center;
+    margin: 1rem 0 1rem 0;
+}
+
+.about__git a {
+    color: white;
+}
+
+.footer{
+    margin-top: 5rem;
+}
+.footer a{
+    color: aliceblue;
+}
+
+@media screen and (min-width: 400px)
+{
+    .about__git__logo{
+        background-image: url("/static/images/github.png");
+        background-repeat: no-repeat;
+        width: 50px;
+    }
+}
