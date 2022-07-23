@@ -1,7 +1,8 @@
 {% extends "shared/layout.html" %}
 {% block main %}
-<div class="con">
-    <h3 class="text-center" style="color: white;">Ops... An error occurred</h3>
-    <h3 class="text-center" style="color: white;">{{ top }}</h3>
-</div>
+<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/erro.css') }}">
+<section class="erro">
+    <h1 class="text-center fs-4" >Ops... An error occurred</h1>
+    <h2 class="text-center fs-4" >{{ top }}</h2>
+</section>
 {% endblock %}
