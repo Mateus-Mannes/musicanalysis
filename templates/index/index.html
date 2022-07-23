@@ -20,8 +20,13 @@
     </div>
     <div>
         <p>Connect to spotify to analyse yours top tracks !</p>
-        <form action="/login" method="get">
-            <button class="btn btn-outline-success my-2 my-sm-0">Login with Spotify</button>
+        {% if session.uuid %}
+            <form action="/profile" method="get">
+                <button class="btn btn-outline-success my-2 my-sm-0">Analyze your profile</button>
+        {% else %}
+            <form action="/login" method="get">
+                <button class="btn btn-outline-success my-2 my-sm-0">Login with Spotify</button>
+        {% endif %}
         </form>
     </div>
 </section>
