@@ -8,8 +8,6 @@
 <script>
     var top_tracks_data = JSON.parse('{{ top_tracks_data | tojson | safe}}');
 </script>
-<script type="text/javascript" src="{{ url_for('static',filename='js/index.js') }}"></script>
-
 
 <section class="header text-center">
     <div class="container">
@@ -74,7 +72,7 @@
         <div class="container">
             <button class="popularity__filter__dropdown dropdown-toggle" id="dropbtn">pop</button>
             <div id="dropdown" class="popularity__filter__dropdown__content">
-                <input type="text" placeholder="Search.." id="input" class="popularity__filter__dropdown__content__input" onkeyup="filterFunction()">
+                <input type="text" placeholder="Search.." id="input" class="popularity__filter__dropdown__content__input">
                 <div class="popularity__filter__dropdown__content__genres">  
                     {% for genre in genres %}
                         <a class="popularity__filter__dropdown__content__genre" onclick="changeCountry('{{ genre }}');">{{ genre }}</a>
@@ -97,5 +95,7 @@
         <a  href="http://spotify.com" target="_blank"><b>Spotify</b></a>
     </p>
 </footer>
+
+<script type="text/javascript" src="{{ url_for('static',filename='js/index.js') }}"></script>
 
 {% endblock %}

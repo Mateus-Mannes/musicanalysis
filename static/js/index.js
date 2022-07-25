@@ -18,7 +18,7 @@ for (contry in top_tracks_data)
 count_genre.push([contry, count]);
 }
   
-function filterFunction() {
+document.getElementById('input').onkeyup = function filterFunction() {
     var input, filter, ul, li, a, i;
     input = document.getElementById("input");
     filter = input.value.toUpperCase();
@@ -32,7 +32,7 @@ function filterFunction() {
         a[i].style.display = "none";
       }
     }
-  }
+}
 
 function changeCountry(genre) {
     var count_genre = [['Country', 'Popularity']];
@@ -74,5 +74,5 @@ function changeCountry(genre) {
 
 $(window).resize(function() { 
     location.reload();
-    });
+});
 
