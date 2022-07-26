@@ -1,0 +1,23 @@
+.search__form{
+    max-width: 350px;
+
+    display: flex;
+    
+}
+
+.search__form__button{
+    height: 100%;
+}
+
+.search__form__input{
+    margin-right: 1rem;
+}
+
+.search__form__loading{
+    display: flex;
+    align-items: center;
+}
+
+.search__form__loading__spinner{
+    margin-right: 1rem;
+}
