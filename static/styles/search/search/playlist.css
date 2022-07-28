@@ -1,0 +1,24 @@
+.playlists{
+    background-color:  darkslategrey;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    max-width: none;
+    padding-top: 2rem;
+}
+
+.playlists__label{
+    color: white;
+}
+
+.playlists__carousel{
+    width: 100%;
+    max-width: 730px;
+}
+
+.playlists__carousel__item{
+    width: 70%;
+    max-width: 730px;
+}

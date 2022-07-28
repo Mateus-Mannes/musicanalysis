@@ -1,75 +1,59 @@
 {% extends "shared/layout.html" %}
 {% block main %}
 
-<div class="bg-dark py-5">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/search/search/user.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/search/search/playlist.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/search/search/topArtist.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/search/search/genre.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/search/search/songs.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/search/search/footer.css') }}">
+<script src="https://open.spotify.com/embed-podcast/iframe-api/v1" async></script>
 
-    <p class="mt-7"></p>
-    <div class="m-auto d-flex justify-content-center">
-        <img src={{ search.Image }} class="user-img">
-    </div>
-    <h3 class="text-center text-white">User: {{ search.Name }}</h3>
+<section class="user container">
+    <img src={{ search.Image }} class="user__img">
+    <h1 class="user__description fs-3">User: {{ search.Name }}</h1>
+</section>
 
-    <h3 class="text-center text-white my-4">Some of {{ search.Name }}'s playlists are:</h3>
-    <div class="accordion" id="accordionExample">
-
-        {% set numbers = { 1: "One", 2: "Two", 3: "Three", 4: "Four", 5: "Five"} %}
-        {% for i in range(search.Playlists['items']|length) %}
-
-        <p class="text-center">
-            <button class="btn btn-success" style="margin-bottom: 0.3cm; width: 200px;" type="button" data-toggle="collapse" data-target="#collapse{{ numbers[i+1] }}"
-                    {% if i==0 %}
-                    aria-expanded="true"
-                    {% else %}
-                    aria-expanded="false"
-                    {% endif %}
-                    aria-controls="collapse{{ numbers[i+1] }}">
-                {% if search.Playlists["items"][i]["name"]|length > 23 %}
-                {{ search.Playlists["items"][i]["name"][0:20] }}...
-                {% else %}
-                {{ search.Playlists["items"][i]["name"] }}
-                {% endif %}
-            </button>
-        </p>
-
-        <div id="collapse{{ numbers[i+1] }}"
-             {% if i == 0 %}
-             class="collapse show"
-             {% else %}
-             class="collapse"
-             {% endif %}
-             aria-labelledby="heading{{ numbers[i+1] }}" data-parent="#accordionExample">
-            <div class="card-body">
-
-                <p class="text-center">
-                    <iframe src={{"https://open.spotify.com/embed/playlist/" + search.Playlists['items'][i]["id"]}} width="300" height="380" frameborder="0"
-                            allowtransparency="true" allow="encrypted-media"></iframe>
-                </p>
-
-            </div>
+<section class="playlists container">
+    <h2 class="playlists__label fs-4">Some of {{ search.Name }}'s playlists are:</h2>
+    <div id="carouselExampleControls" class="playlists__carousel carousel slide" >
+        <div class="carousel-inner">
+            {% for i in range(search.Playlists['items']|length) %}
+                <div {% if i == 1 %} class="carousel-item active" {% else %} class="carousel-item" {% endif %}>
+                    <p class=" text-center">
+                        <iframe class="playlists__carousel__item" src={{"https://open.spotify.com/embed/playlist/" + search.Playlists['items'][i]["id"]}}  height="380" frameborder="0"
+                                allowtransparency="true" allow="encrypted-media"></iframe>
+                    </p>
+                </div>
+            {% endfor %}
         </div>
-
-        {% endfor %}
-
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
     </div>
+</section>
 
-</div>
-
-<div style="background-image: url(static/images/green-blue.jpg);background-repeat: no-repeat; background-size: cover;padding: 0.5cm;">
-
-    <h3 class="text-center text-white mt-4">The most frequent artist of {{ search.Name }} is {{ artist["artist"]["name"] }}</h3>
-    <p class="text-center text-white">Genre: {{ artist["genre"] }}</p>
-    <div class="m-auto d-flex justify-content-center">
-        <img src={{ artist["artist"]["images"][0]["url"] }} class="user-img">
+<section class="topArtist container">
+    <h3 class="topArtist__label fs-4">The most frequent artist of {{ search.Name }} is {{ artist["artist"]["name"] }}</h3>
+    <div class="topArtist__info">
+        <div class="topArtist__info__static">
+            <p class="topArtist__info__static__genre fs-4">Genre: {{ artist["genre"] }}</p>
+            <img src={{ artist["artist"]["images"][0]["url"] }} class="topArtist__info__static__img">
+        </div>
+        <p class="topArtist__info__album text-center">
+            <iframe src="https://open.spotify.com/embed/album/{{ artist["album"] }}" width="100%" height="300" frameborder="0"
+                    allowtransparency="true" allow="encrypted-media"></iframe>
+        </p>
     </div>
-    <p class="text-center mt-4">
-        <iframe src="https://open.spotify.com/embed/album/{{ artist["album"] }}" width="300" height="380" frameborder="0"
-                allowtransparency="true" allow="encrypted-media"></iframe>
-    </p>
-</div>
+</section>
 
-<div class="bg-light p-1">
-
-    <h3 class="text-center mt-4">The main genres of {{ search.Name }}'s playlists are:</h3>
+<section class="genres container">
+    <h3 class="text-center fs-4">The main genres of {{ search.Name }}'s playlists are:</h3>
     <p class="text-center">
         {% set colors = {0: "primary", 1: "secondary", 2: "success", 3: "danger", 4: "warning"} %}
         {% for i in range(genres|length) %}
@@ -78,41 +62,37 @@
         </div>
         {% endfor %}
     </p>
+</section>
 
-</div>
-
-<div class="bg-info p-2">
+<section class="songs container">
+    <h3 class="text-center fs-4">Some songs that you have in common</h3>
+    <h3 class="text-center fs-4">whith {{ search.Name }} are:</h3>
     {% if incommon != [] %}
-    <h3 class="text-center text-white mt-4">Some songs that you have in common</h3>
-    <h3 class="text-center text-white mb-4">whith {{ search.Name }} are:</h3>
-    <p class="text-center m-auto" style="max-width: 680px;">
-        {% for i in range(incommon|length) %}
-        {% if i != incommon|length - 1 or incommon|length == 2 %}
-        <iframe src="https://open.spotify.com/embed/track/{{ incommon[i] }}" width="300" height="380" frameborder="0"
-                allowtransparency="true" allow="encrypted-media"></iframe>
-        {% endif %}
-        {% endfor %}
-    </p>
-    {% if incommon|length > 0 and incommon|length != 2 %}
-    <div style="text-align: center;">
-        <iframe src="https://open.spotify.com/embed/track/{{ incommon[incommon|length - 1] }}" width="300" height="380" frameborder="0"
-                allowtransparency="true" allow="encrypted-media"></iframe>
-    </div>
-    {% endif %}
+        <div class="text-center">
+            {% for i in range(incommon|length) %}
+                <iframe src="https://open.spotify.com/embed/track/{{ incommon[i] }}" width="300" height="380" frameborder="0"
+                        allowtransparency="true" allow="encrypted-media"></iframe>
+            {% endfor %}
+        </div>
     {% else %}
-    <h3 class="text-center text-white mt-4">Some songs that you have in common</h3>
-    <h3 class="text-center text-white mb-4">whith {{ search.Name }} are:</h3>
-    <h3 class="text-center text-white mt-4">
-        Sorry, we didn't find any in common musics between the user's public playlists
-        and yours.
-    </h3>
+        <h3 class="text-center fs-4">
+            Sorry, we didn't find any in common musics between the user's public playlists and yours.
+        </h3>
     {% endif %}
+</section>
 
-    <p class="text-center pt-5"><a class="text-white" href="/">Home |</a><a class="text-white" href="/search"> analyze others users profiles |</a><a class="text-white" href="/profile"> analyze your profile</a></p>
-    <p class="text-center p-2 text-white">
-        Data provided by
-        <a href="http://spotify.com" target="_blank"><b>Spotify</b></a>
+<footer class="footer">
+    <p class="text-center">
+        <a  href="/">Home |</a>
+        <a  href="/search"> analyze others users profiles |</a>
+        <a  href="/profile"> analyze your profile</a>
     </p>
+    <p class="text-center">
+        Data provided by
+        <a  href="http://spotify.com" target="_blank"><b>Spotify</b></a>
+    </p>
+</footer>
 
-</div>
+<script type="text/javascript" src="{{ url_for('static',filename='js/search.js') }}"></script>
+
 {% endblock %}
