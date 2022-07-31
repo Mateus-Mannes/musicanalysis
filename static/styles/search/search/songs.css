@@ -1,7 +1,13 @@
 .songs{
     max-width: none;
-    margin-top: 2rem;
     padding-top: 1rem;
-    background: linear-gradient(360deg, aqua ,  cornflowerblue  );
+    padding-top: 1rem;
+    background: linear-gradient(darkslategrey 1%,  #343434 99% );
+    padding-bottom: 1rem;
     color: white;
+}
+
+.songs__players{
+    max-width: 1000px;
+    margin: auto;
 }

@@ -1,6 +1,6 @@
 .footer{
     height: 20vh;
-    background: linear-gradient(#343434 1%,  darkslategrey 99% );
+    background: linear-gradient(darkslategrey 1%,  #343434 99% );
     padding: 3rem 3rem;
     color: white;
 }

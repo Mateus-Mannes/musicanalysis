@@ -1,5 +1,5 @@
 .topArtist{
-    background: linear-gradient(darkslategrey, white);
+    background: linear-gradient(#343434, grey);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -54,10 +54,6 @@
     .topArtist__info__static{
         margin-top: 2rem;
         margin-right: 2rem;
-    }
-
-    .topArtist__info__static__genre{
-        color: black;
     }
     
     .topArtist__info__static__img{
