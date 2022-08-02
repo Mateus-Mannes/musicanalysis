@@ -80,7 +80,7 @@ def playlist(id):
     playlist_id = id
     auth_manager = spotipy.oauth2.SpotifyOAuth(cache_path=session_cache_path())
     playlist = Playlist(playlist_id, auth_manager)
-    return render_template('playlist/playlist.html', averages=playlist.GetAverages(), features=playlist.GetFeatures())
+    return render_template('playlist/playlist.html', averages=playlist.GetAverages(), features=playlist.GetFeatures(), playlistName=playlist.Name)
 
 @app.route('/search', methods=["GET", "POST"])
 @login_required

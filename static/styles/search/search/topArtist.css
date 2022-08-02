@@ -6,7 +6,8 @@
     justify-content: center;
     text-align: center;
     max-width: none;
-    padding-top: 2rem;
+    padding-top: 3rem;
+    padding-bottom: 2rem;
 }
 
 .topArtist__label{

@@ -6,7 +6,12 @@
     flex-direction: column;
     text-align: center;
     max-width: none;
-    padding-top: 2rem;
+    height: 100vh;
+}
+
+.user__label{
+    color: white;
+    padding-bottom: 1rem;
 }
 
 .playlists__label{
@@ -21,4 +26,21 @@
 .playlists__carousel__item{
     width: 70%;
     max-width: 730px;
+}
+
+.user__img{
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+@media screen and (min-width: 600px)
+{    
+    .user__img{
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
 }

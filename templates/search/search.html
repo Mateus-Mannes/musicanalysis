@@ -9,12 +9,9 @@
 <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/search/search/footer.css') }}">
 <script src="https://open.spotify.com/embed-podcast/iframe-api/v1" async></script>
 
-<section class="user container">
-    <img src={{ search.Image }} class="user__img">
-    <h1 class="user__description fs-3">User: {{ search.Name }}</h1>
-</section>
-
 <section class="playlists container">
+    <img src={{ search.Image }} class="user__img">
+    <h1 class="user__label fs-3">User: {{ search.Name }}</h1>
     <h2 class="playlists__label fs-4">Some of {{ search.Name }}'s playlists are:</h2>
     <div id="carouselExampleControls" class="playlists__carousel carousel slide" >
         <div class="carousel-inner">
