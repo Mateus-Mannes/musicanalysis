@@ -1,40 +1,36 @@
 {% extends "shared/layout.html" %}
 {% block main %}
-<div class="bg-dark p-5">
-    <div class="mt-2 d-flex justify-content-center">
-        <img src={{ profile.Img }} class="user-img">
-    </div>
-    <h3 class="text-white text-center" id="hello">
-        Good Morning {% if profile.User["display_name"] != "" %} {{  profile.User["display_name"] }} {% set name = profile.User["display_name"] %} {% else %} {{  profile.User["id"] }} {% set name = profile.User["id"] %} {%endif%} !
+
+<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/profile/playlists.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/profile/artists.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/profile/topTracks.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/profile/footer.css') }}">
+
+<section class="playlists container">
+    <img src={{ profile.Img }} class="playlists__userImg">
+    <h3 class="fs-4">
+        Hi 
+        {% if profile.User["display_name"] != "" %} 
+            {{  profile.User["display_name"] }} 
+            {% set name = profile.User["display_name"] %} 
+        {% else %} 
+            {{  profile.User["id"] }} 
+            {% set name = profile.User["id"] %} 
+        {%endif%} ! Some of your playlists:
     </h3>
-    <script>
-      now = new Date
-      if (now.getHours() >= 0 && now.getHours() < 5) {
-          var element = document.getElementById("hello");
-          element.innerHTML = "Good Night {{name}} !";
-      }
-      else if (now.getHours() >= 5 && now.getHours() < 12) {
-          var element = document.getElementById("hello");
-          element.innerHTML = "Good morning {{name}} !";
-      }
-      else if (now.getHours() >= 12 && now.getHours() < 18) {
-          var element = document.getElementById("hello");
-          element.innerHTML = "Good Evening {{name}} !";
-      }
-      else {
-          var element = document.getElementById("hello");
-          element.innerHTML = "Good Night {{name}} !";
-      }
-    </script>
-    <p class="text-center">
+    <p class="text-center playlists__players">
         {% for playlist in profile.Playlists["items"] %}
-        <iframe src="https://open.spotify.com/embed/playlist/{{ playlist["id"] }}" width="300" height="80" frameborder="0"
-                allowtransparency="false" allow="encrypted-media"></iframe>
-        {% endfor %}
+            <iframe src="https://open.spotify.com/embed/playlist/{{ playlist["id"] }}" width="300" height="80" frameborder="0"
+                    allowtransparency="false" allow="encrypted-media"></iframe>
+            {% endfor %}
     </p>
-    <div class="dropdown d-flex justify-content-center">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <div class="dropdown">
+        <button class="playlists__dropdown__button btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Choose a playlist to analyze
+        </button>
+        <button hidden id="dropdown-spinner" class="playlists__dropdown__button btn btn-secondary" type="button" disabled>
+            <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+            Loading...
         </button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
             {% for i in range(profile.Playlists["items"]|length) %}
@@ -48,40 +44,41 @@
             {% endfor %}
         </div>
     </div>
-    <script language=javascript type="text/javascript">
-      {% for i in range(profile.Playlists["items"]|length) %}
-      document.querySelector('#link{{ i }}').onclick = function() {
-      var element = document.getElementById("dropdownMenuButton");
-      element.innerHTML = "<span>Loading...  </span><div  style='height: 20px; width: 20px' class='spinner-border' role='status'></div>";
-      };
-      {% endfor %}
-    </script>
-</div>
-<div class="py-5" style="background-image: url(static/images/green-blue.jpg);background-repeat: no-repeat;background-size: cover;">
-    <h3 class="text-white text-center">Main favorite genre: {{ genre }} &#9835;</h3>
-    <h3 class="text-white text-center">Top Artists:</h3>
-    <div style="margin: auto; text-align: center; ">
-        <div class="card-group px-1">
-            {% for i in range(profile.TopArtists["items"]|length) if i < 5 %}
-            <div class="card" style="background:none;border: none">
-                <img src={{profile.TopArtists["items"][i]["images"][0]["url"]}} style="margin: auto; text-align: center;" class="user-img">
-                <font color="white">{{ profile.TopArtists["items"][i]["name"] }}</font>
+</section>
+
+<section  class="artists container">
+    <h3 class="fs-4">Your main favorite genre: {{ genre }} &#9835;</h3>
+    <h3 class="fs-4">Your top Artists:</h3>
+    <div class="artists__info">
+        {% for i in range(profile.TopArtists["items"]|length) if i < 5 %}
+            <div class="artists__info__list">
+                <img src={{profile.TopArtists["items"][i]["images"][0]["url"]}}  class="artists__info__list__img">
+                <p class="fs-6">{{ profile.TopArtists["items"][i]["name"] }}</p>
             </div>
-            {% endfor %}
-        </div>
+        {% endfor %}
     </div>
-</div>
-<div class="bg-dark p-5">
-    <h3 class="text-center text-white" id="hello">Your Top Tracks:</h3>
-    <p class="text-center text-white">
+</section>
+
+<section class="bg-dark topTracks">
+    <h3 class="fs-4">Your Top Tracks:</h3>
+    <p class="text-center fs-4 topTracks__players">
         {% for i in range(profile.TopTracks["items"]|length) if i < 5 %}
         <iframe src="https://open.spotify.com/embed/track/{{ profile.TopTracks["items"][i]["id"] }}" width="300px" height="380px" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
         {% endfor %}
     </p>
-    <p class="text-center pt-5"><a class="text-info" href="/">Home |</a><a class="text-info" href="/search"> analyze others users profiles</a></p>
-    <p class="text-center p-2">
+</section>
+
+<footer class="bg-dark footer">
+    <p class="text-center">
+        <a href="/">Home |</a>
+        <a href="/search"> analyze others users profiles</a>
+    </p>
+    <p class="text-center">
         Data provided by
         <a href="http://spotify.com" target="_blank"><b>Spotify</b></a>
     </p>
-</div>
+</footer>
+
+<script type="text/javascript" src="{{ url_for('static',filename='js/profile.js') }}"></script>
+
 {% endblock %}

@@ -1,0 +1,13 @@
+
+
+.popularity__map__description{
+    text-align: center;
+}
+
+@media screen and (min-width: 600px)
+{
+  .popularity__map{
+    width: 55%;
+    margin-right: 2.5%;
+  }
+}

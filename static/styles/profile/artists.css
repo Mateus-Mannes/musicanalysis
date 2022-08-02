@@ -1,0 +1,53 @@
+.artists{
+    max-width: none;
+    background: linear-gradient(#343434, grey);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+    align-items: center;   
+    padding-top: 2rem;
+}
+
+.artists__info__list__img{
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+
+.artists__info__list:nth-child(2n){
+    margin-right: 0px;
+}
+
+.artists__info__list:nth-child(5){
+    margin-right: 0px;
+}
+
+.artists__info__list{
+    margin-right: 3rem;
+}
+
+@media screen and (min-width: 600px)
+{    
+    .artists__info__list:nth-child(2n){
+        margin-right: 3rem;
+    }
+    
+    .artists{
+        height: 50vh;
+    }
+}
+
+.artists__info{
+    display: flex;
+    flex-wrap: wrap;
+    width: 85%;
+    align-items: center;
+    justify-content: center;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+

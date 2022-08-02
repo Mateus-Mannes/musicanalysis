@@ -1,0 +1,70 @@
+.popularity__filter__dropdown{
+    width: 100%;
+    border-radius: 10px 10px 0px 0px;
+    background-color:#04AA6D;
+    color: #f1f1f1;
+    border: none;
+}
+
+.popularity__filter__dropdown__content {
+    background-color: white;
+    width: calc(100vw - 1.5rem);
+    max-width: calc(900px - 1.5rem);
+    border: 1px solid #ddd;
+    z-index: 1;
+    border-radius:  0px 0px 10px 10px;
+    display:block;
+}
+
+.popularity__filter__dropdown__content__input {
+    box-sizing: border-box;
+    background-position: 14px 12px;
+    background-repeat: no-repeat;
+    font-size: 16px;
+    padding: 14px 20px 12px 45px;
+    border: none;
+    border-bottom: 1px solid #ddd;
+    width: calc(100vw - 1.5rem);
+    max-width: calc(900px - 1.5rem);
+}
+
+.popularity__filter__dropdown__content__input:focus{
+    outline: none;
+}
+
+.popularity__filter__dropdown__content__genres{
+    overflow-y:scroll;
+    height: 20vh;
+}
+  
+.popularity__filter__dropdown__content__genre {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+  
+.popularity__filter__dropdown__content__genre:hover{
+    color: black;
+}
+
+@media screen and (min-width: 600px)
+{
+    .popularity__filter{
+        margin-top: 0.5rem;
+        width: 42.5%;
+    }
+    
+    .popularity__filter__dropdown__content {
+        max-width: calc(100%);
+        display:block;
+    }
+    
+    .popularity__filter__dropdown__content__input {
+        max-width: 100%;
+    }
+    
+    .popularity__filter__dropdown__content__genres{
+        height: calc((100vw * .55 - 1.5rem) * 0.6);
+    }
+}

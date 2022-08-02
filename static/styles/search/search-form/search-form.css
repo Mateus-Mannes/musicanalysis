@@ -1,0 +1,32 @@
+.search__form{
+    margin-top: 3rem;
+    height: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.search__form__button{
+    height: 100%;
+    width: 200px;
+}
+
+.search__form__input{
+    margin-bottom: 1rem;
+    width: 100%;
+    max-width: 700px;
+}
+
+.search__form__loading{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 200px;
+}
+
+.search__form__loading__spinner{
+    margin-right: 1rem;
+}

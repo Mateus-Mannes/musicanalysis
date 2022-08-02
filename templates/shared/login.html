@@ -1,14 +1,12 @@
 {% extends "shared/layout.html" %}
 {% block main %}
-<style>
-    .center {
-        margin: auto
-    }
-</style>
-<div class="con">
-    <h3 class="text-center" style="color: white;">Hi! To use this feature you need to login with your spotify account.</h3>
-    <form class="form-inline my-2 my-lg-0" action="/login" method="get">
-        <button class="btn btn-success center">Login with Spotify</button>
-    </form>
-</div>
+<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/login.css') }}">
+<section class="login">
+    <div class="container">
+        <h1 class="text-center fs-4" >Hi! To use this feature you need to login with your spotify account.</h1>
+        <form class="login__form" action="/login" method="get">
+            <button class="btn btn-success">Login with Spotify</button>
+        </form>
+    </div>
+</section>
 {% endblock %}

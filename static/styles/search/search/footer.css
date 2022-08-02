@@ -1,0 +1,14 @@
+.footer{
+    height: 20vh;
+    background: linear-gradient(#343434 1%,  darkslategrey 99% );
+    padding: 3rem 3rem;
+    color: white;
+}
+
+.footer a{
+    color: white;
+}
+
+.footer a:hover{
+    color: white;
+}

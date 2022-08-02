@@ -1,0 +1,13 @@
+.genres{
+    background-color: #1f1f1f;
+    padding-top: 2rem;
+    color: white;
+    padding-bottom: 2rem;
+}
+
+.genres__cards{
+    max-width: 700px;
+    margin: auto;
+    padding-right: 1rem;
+    padding-left: 1rem;
+}

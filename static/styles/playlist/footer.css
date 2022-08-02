@@ -1,0 +1,14 @@
+.footer{
+    height: 20vh;
+    background-color: #343434;
+    padding: 3rem 3rem;
+    color: white;
+}
+
+.footer a{
+    color: white;
+}
+
+.footer a:hover{
+    color: white;
+}

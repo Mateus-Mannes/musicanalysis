@@ -1,0 +1,66 @@
+.topArtist{
+    background: linear-gradient(#343434, grey);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    max-width: none;
+    padding-top: 3rem;
+    padding-bottom: 2rem;
+}
+
+.topArtist__label{
+    color: white;
+}
+
+.topArtist__info{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+}
+
+.topArtist__info__static{
+    margin-bottom: 2rem;
+}
+
+.topArtist__info__static__img{
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.topArtist__info__static__genre{
+    color: white;
+}
+
+.topArtist__info__album{
+    width: 100%;
+    max-width: 450px;
+}
+
+@media screen and (min-width: 600px)
+{
+    .topArtist__info{
+        display: flex;
+        justify-content: center;
+        flex-direction: row;
+        align-items: start;
+        width: 100%;
+    }
+    
+    .topArtist__info__static{
+        margin-top: 2rem;
+        margin-right: 2rem;
+    }
+    
+    .topArtist__info__static__img{
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+}

@@ -1,0 +1,37 @@
+.tracks{
+    background-color: #343434;
+    color: white;
+    padding-top: 1.5rem;
+}
+
+.tracks__players{
+    display: flex;
+    justify-content: center;
+    max-width: 900px;
+    margin: auto;
+    flex-wrap: wrap;
+    padding-top: 1.5rem;
+}
+
+.tracks__players__player{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 3rem;
+}
+
+.tracks__players__player p {
+    margin-bottom: 0px;
+}
+
+
+@media screen and (min-width: 600px)
+{
+    .tracks__players__player{
+        margin-right: 1.5rem;
+    }
+    .tracks__players__player:nth-child(3n){
+        margin-right: 0px;
+    }
+}

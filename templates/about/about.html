@@ -1,13 +1,20 @@
 {% extends "shared/layout.html" %}
 {% block main %}
-    <style>
-        .center {
-            margin: auto
-        }
-    </style>
-    <div class="con">
-        <h3 class="text-center" style="color: white;">Music analysis is an web project to analyze data from Spotify about the music world.</h3>    
-        <p><a style="color: white;" target="_blank" href="https://github.com/Mateus-Mannes/musicanalysis"><u>Check out our documentation and code in GitHub</u></a></p>
-        <p style="margin-top:2cm;" class="text-center"><a href="/"><font color="green">Home |</font></a><a href="/search"><font color="green"> analyze others users profiles |</font></a><a href="/profile"><font color="green"> analyze your profile</font></a></p>
-    </div>
+<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/about/about.css') }}">
+    <section class="about">
+        <div class="container">
+            <h1>Music analysis is an web project to analyze data from Spotify about the music world.</h1>    
+            <h2 class="about__git">
+                <div class="about__git__logo"></div>
+                <a target="_blank" href="https://github.com/Mateus-Mannes/musicanalysis">
+                    Check out our documentation and code in GitHub
+                </a>
+            </h2>
+            <p class="footer fs-5">
+                <a href="/">Home |</a>
+                <a href="/search"> analyze others users profiles | </a>
+                <a href="/profile"> analyze your profile</a>
+            </p>
+        </div>
+    </section>
 {% endblock %}

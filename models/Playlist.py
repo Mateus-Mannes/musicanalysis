@@ -7,6 +7,7 @@ class Playlist():
     def __init__(self, playlistId, auth_manager):
         self.Spotify = spotipy.Spotify(auth_manager=auth_manager)
         self.PlaylistData = self.Spotify.playlist_tracks(playlistId)
+        self.Name = self.Spotify.playlist(playlistId)["name"]
         tracksIds = []
         for i in range(len(self.PlaylistData["items"])):
             try:
