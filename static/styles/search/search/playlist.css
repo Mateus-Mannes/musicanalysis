@@ -37,6 +37,9 @@
 
 @media screen and (min-width: 600px)
 {    
+    .playlists{
+        padding-top: 80px;
+    }
     .user__img{
         width: 150px;
         height: 150px;
