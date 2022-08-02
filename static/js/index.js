@@ -72,7 +72,11 @@ function changeCountry(genre) {
     mapTitle.innerHTML = "<b>current popularity of " + genre + " in the world</b>";
 }
 
-$(window).resize(function() { 
-    location.reload();
-});
+let width = document.documentElement.clientWidth;
+window.onresize = function() { 
+    newWidth = document.documentElement.clientWidth;
+    if((width - newWidth) * -1 > 100){
+        location.reload();
+    }
+};
 
