@@ -10,46 +10,41 @@
         <h1 class="fs-3 text-center statistics__title">Playlist {{ playlistName }} Statistics:</h1>
 
         <div class="statistics__chart">
-            <p class="fs-4 statistics__label">Danceability</p>
-                <div class="progress ">
-                    <div class="progress-bar fs-5" role="progressbar" style="width: {{ averages["danceability"]  }}%; background-color: #47FF6D;" aria-valuenow="{{  averages["danceability"] }}" aria-valuemin="0" aria-valuemax="100">
-                        {{ averages["danceability"] }}%
+            <p class="fs-4 statistics__label">Danceability {{ averages["danceability"] }}%</p>
+                <div class="progress">
+                    <div class="progress-bar" role="progressbar" style="width: {{ averages["danceability"]  }}%; background-color: #47FF6D;" aria-valuenow="{{  averages["danceability"] }}" aria-valuemin="0" aria-valuemax="100">
                     </div>
                 </div>
         </div>
 
         <div class="statistics__chart">
-        <p class="fs-4 statistics__label">Energy</p>
+        <p class="fs-4 statistics__label">Energy {{ averages["energy"] }}%</p>
         <div class="progress">
-            <div class="progress-bar fs-5" role="progressbar" style="width: {{averages["energy"] }}%; background-color: #E6DD45;" aria-valuenow="{{ averages["energy"] }}" aria-valuemin="0" aria-valuemax="100">
-                {{ averages["energy"] }}%
+            <div class="progress-bar" role="progressbar" style="width: {{averages["energy"] }}%; background-color: #E6DD45;" aria-valuenow="{{ averages["energy"] }}" aria-valuemin="0" aria-valuemax="100">
             </div>
         </div>
     </div>
     
         <div class="statistics__chart">
-        <p class="fs-4 statistics__label">Acousticness</p>
+        <p class="fs-4 statistics__label">Acousticness {{ averages["acousticness"] }}%</p>
         <div class="progress">
-            <div class="progress-bar fs-5" role="progressbar" style="width: {{ averages["acousticness"] }}%; background-color: #FCAD58;" aria-valuenow="{{ averages["acousticness"] }}" aria-valuemin="0" aria-valuemax="100">
-                {{ averages["acousticness"] }}%
+            <div class="progress-bar" role="progressbar" style="width: {{ averages["acousticness"] }}%; background-color: #FCAD58;" aria-valuenow="{{ averages["acousticness"] }}" aria-valuemin="0" aria-valuemax="100">
             </div>
         </div>
     </div>
     
         <div class="statistics__chart">
-        <p class="fs-4 statistics__label" >Instrumentalness</p>
+        <p class="fs-4 statistics__label" >Instrumentalness  {{ averages["instrumentalness"]  }}%</p>
         <div class="progress">
-            <div class="progress-bar fs-5" role="progressbar" style="width: {{ averages["instrumentalness"] }}%; background-color: #E64570;" aria-valuenow="{{ averages["instrumentalness"]}}" aria-valuemin="0" aria-valuemax="100">
-                {{ averages["instrumentalness"]  }}%
+            <div class="progress-bar" role="progressbar" style="width: {{ averages["instrumentalness"] }}%; background-color: #E64570;" aria-valuenow="{{ averages["instrumentalness"]}}" aria-valuemin="0" aria-valuemax="100">
             </div>
         </div>
     </div>
 
         <div class="statistics__chart">
-        <p class="fs-4 statistics__label">Valence</p>
+        <p class="fs-4 statistics__label">Valence {{ averages["valence"] }}%</p>
         <div class="progress">
-            <div class="progress-bar fs-5" role="progressbar" style="width: {{ averages["valence"]  }}%; background-color: #7F4CFE;" aria-valuenow="{{ averages["valence"]}}" aria-valuemin="0" aria-valuemax="100">
-                {{ averages["valence"] }}%
+            <div class="progress-bar" role="progressbar" style="width: {{ averages["valence"]  }}%; background-color: #7F4CFE;" aria-valuenow="{{ averages["valence"]}}" aria-valuemin="0" aria-valuemax="100">
             </div>
         </div>
     </div>
