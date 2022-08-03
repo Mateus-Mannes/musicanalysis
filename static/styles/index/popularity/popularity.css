@@ -6,7 +6,7 @@
 {
     .popularity{
         display: flex;
-        height: 85vh;
+        max-height: 85vh;
         margin: 1rem auto 1rem auto;
     }
 }
