@@ -35,7 +35,3 @@ set FLASK_APP=application.py
 Take a look on how to register an app, get your CLIENT ID and SECRET and register a REDIRECT_URI here: https://developer.spotify.com/documentation/web-api/quick-start/
 
 Then run the command "flask run" in the CMD.
-
-
-# Deploy
-The branch master of the repo is deployed at Heroku (with automatic deploy when there is a push or commit), this is the reason of the Procfile. Take a look on how to deploy an app like this in: https://www.youtube.com/watch?v=sqJSdJbOOU0
