@@ -1,6 +1,6 @@
 # Musicanalysis
 musicanalysis is a Flask app that uses the Spotify API and the Spotipy python lib to create cool analysis about Music.
-Master branch deployed at: http://spmusicanalysis.herokuapp.com/
+Master branch deployed at: https://musicanalysis.azurewebsites.net/
 
 # Dependencies
 The app is based in apotipy lib (https://spotipy.readthedocs.io/en/2.16.1/) and spotify web api (https://developer.spotify.com/)
